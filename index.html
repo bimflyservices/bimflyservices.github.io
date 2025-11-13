@@ -58,6 +58,7 @@
       justify-content: space-between;
       gap: 16px;
       background: linear-gradient(120deg, rgba(15, 23, 42, 0.95), rgba(30, 64, 175, 0.35));
+      flex-wrap: wrap;
     }
 
     .logo {
@@ -91,6 +92,12 @@
       text-transform: uppercase;
       letter-spacing: 0.22em;
       color: var(--text-muted);
+      max-width: 260px;
+      line-height: 1.4;
+    }
+
+    .logo-text-sub span {
+      display: block;
     }
 
     nav {
@@ -98,22 +105,28 @@
       gap: 10px;
       flex-wrap: wrap;
       justify-content: flex-end;
+      align-items: center;
     }
 
-    nav a {
+    nav a,
+    nav button.nav-trigger {
       padding: 7px 12px;
       border-radius: 999px;
       font-size: 12px;
       text-decoration: none;
       color: var(--text-muted);
       border: 1px solid transparent;
+      background: transparent;
       transition: all 0.18s ease-out;
       display: inline-flex;
       align-items: center;
       gap: 6px;
+      cursor: pointer;
+      font-family: inherit;
     }
 
-    nav a span.dot {
+    nav a span.dot,
+    nav button.nav-trigger span.dot {
       width: 6px;
       height: 6px;
       border-radius: 999px;
@@ -121,7 +134,8 @@
       opacity: 0.6;
     }
 
-    nav a:hover {
+    nav a:hover,
+    nav button.nav-trigger:hover {
       color: var(--text-main);
       border-color: rgba(148, 163, 184, 0.4);
       background: rgba(15, 23, 42, 0.7);
@@ -140,25 +154,58 @@
       opacity: 0.9;
     }
 
+    /* Dropdown */
+    .nav-dropdown {
+      position: relative;
+    }
+
+    .nav-dropdown-menu {
+      position: absolute;
+      top: 120%;
+      left: 0;
+      min-width: 210px;
+      background: #0284c7;
+      border-radius: 0 0 10px 10px;
+      box-shadow: 0 10px 20px rgba(15, 23, 42, 0.6);
+      display: none;
+      flex-direction: column;
+      padding: 10px 0;
+      z-index: 20;
+    }
+
+    .nav-dropdown-menu a {
+      padding: 9px 18px;
+      border-radius: 0;
+      font-size: 12px;
+      color: #f9fafb;
+      border: none;
+      background: transparent;
+      gap: 0;
+    }
+
+    .nav-dropdown-menu a:hover {
+      background: rgba(15, 23, 42, 0.2);
+      border: none;
+    }
+
+    .nav-dropdown:hover .nav-dropdown-menu {
+      display: flex;
+    }
+
     /* Main layout */
     main {
-      padding: 32px 24px 28px;
-      display: grid;
-      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
-      gap: 26px;
+      padding: 24px 20px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
     }
 
-    @media (max-width: 880px) {
-      main {
-        grid-template-columns: minmax(0, 1fr);
-      }
-    }
-
-    /* Left column (hero) */
+    /* HERO */
     .hero {
       display: flex;
       flex-direction: column;
       gap: 20px;
+      max-width: 860px;
     }
 
     .badge {
@@ -174,12 +221,6 @@
       width: fit-content;
     }
 
-    .badge-label {
-      border-radius: 999px;
-      padding: 3px 9px;
-      background: var(--accent-soft);
-      color: var(--accent);
-      font-weight: 600;
     }
 
     .badge-pill {
@@ -189,8 +230,8 @@
     }
 
     .title {
-      font-size: clamp(28px, 3vw, 34px);
-      line-height: 1.2;
+      font-size: clamp(26px, 3vw, 34px);
+      line-height: 1.25;
       font-weight: 700;
       letter-spacing: 0.015em;
     }
@@ -206,62 +247,7 @@
       font-size: 14px;
       color: var(--text-muted);
       max-width: 36rem;
-    }
-
-    .cta-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 8px;
-      align-items: center;
-    }
-
-    .btn {
-      border-radius: 999px;
-      padding: 9px 16px;
-      font-size: 13px;
-      border: 1px solid transparent;
-      cursor: pointer;
-      font-family: inherit;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      transition: all 0.16s ease-out;
-    }
-
-    .btn-primary {
-      background: linear-gradient(140deg, #38bdf8, #a5b4fc);
-      color: #020617;
-      box-shadow: 0 14px 28px rgba(56, 189, 248, 0.4);
-      font-weight: 600;
-    }
-
-    .btn-primary:hover {
-      filter: brightness(1.03);
-      transform: translateY(-1px);
-      box-shadow: 0 18px 36px rgba(56, 189, 248, 0.6);
-    }
-
-    .btn-ghost {
-      background: rgba(15, 23, 42, 0.4);
-      border-color: rgba(148, 163, 184, 0.5);
-      color: var(--text-main);
-    }
-
-    .btn-ghost:hover {
-      background: rgba(15, 23, 42, 0.9);
-    }
-
-    .btn-icon-circle {
-      width: 20px;
-      height: 20px;
-      border-radius: 999px;
-      border: 1px solid rgba(15, 23, 42, 0.85);
-      background: rgba(15, 23, 42, 0.98);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 11px;
+      line-height: 1.6;
     }
 
     .meta-row {
@@ -296,21 +282,21 @@
       background: linear-gradient(to bottom, transparent, rgba(148, 163, 184, 0.8), transparent);
     }
 
-    /* Services section */
+    /* Services tiles on home */
     .services {
-      margin-top: 18px;
+      margin-top: 22px;
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 12px;
     }
 
-    @media (max-width: 720px) {
+    @media (max-width: 980px) {
       .services {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     }
 
-    @media (max-width: 520px) {
+    @media (max-width: 600px) {
       .services {
         grid-template-columns: minmax(0, 1fr);
       }
@@ -318,21 +304,40 @@
 
     .service-card {
       border-radius: var(--radius-xl);
-      background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.18), rgba(15, 23, 42, 0.95));
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      padding: 12px 12px 11px;
+      background: #f97316;
+      border: none;
+      padding: 0;
+      overflow: hidden;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
       display: flex;
       flex-direction: column;
-      gap: 5px;
-      position: relative;
-      overflow: hidden;
+      min-height: 190px;
+    }
+
+    .service-image {
+      height: 90px;
+      background-size: cover;
+      background-position: center;
+      filter: brightness(0.9);
+    }
+
+    .service-body {
+      background: #f9fafb;
+      color: #020617;
+      padding: 10px 12px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 1;
     }
 
     .service-label {
-      font-size: 11px;
+      font-size: 10px;
       text-transform: uppercase;
       letter-spacing: 0.18em;
-      color: var(--text-muted);
+      color: #6b7280;
     }
 
     .service-title {
@@ -342,25 +347,61 @@
 
     .service-meta {
       font-size: 11px;
+      color: #4b5563;
+      line-height: 1.5;
+    }
+
+    /* Projects section */
+    .projects {
+      margin-top: 10px;
+      max-width: 860px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .section-heading {
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
       color: var(--text-muted);
     }
 
-    .service-tag-row {
-      margin-top: 4px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      font-size: 10px;
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
     }
 
-    .service-tag {
-      padding: 3px 7px;
-      border-radius: 999px;
-      background: rgba(15, 23, 42, 0.85);
-      border: 1px solid rgba(148, 163, 184, 0.55);
+    @media (max-width: 780px) {
+      .projects-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
     }
 
-    /* Right column (status panel) */
+    @media (max-width: 520px) {
+      .projects-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .project-card {
+      border-radius: 14px;
+      border: 1px dashed rgba(148, 163, 184, 0.6);
+      padding: 9px 10px;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .project-title {
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 4px;
+      font-size: 12px;
+    }
+
+    /* Engagement Snapshot */
     .side-panel {
       border-radius: 22px;
       padding: 14px 14px 14px;
@@ -371,6 +412,7 @@
       gap: 10px;
       position: relative;
       overflow: hidden;
+      max-width: 860px;
     }
 
     .side-header {
@@ -378,6 +420,7 @@
       align-items: center;
       justify-content: space-between;
       gap: 10px;
+      flex-wrap: wrap;
     }
 
     .side-title {
@@ -396,6 +439,7 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
+      white-space: nowrap;
     }
 
     .status-dot {
@@ -412,7 +456,7 @@
       background: rgba(15, 23, 42, 0.75);
       border: 1px solid rgba(191, 219, 254, 0.6);
       font-size: 12px;
-      line-height: 1.4;
+      line-height: 1.5;
     }
 
     .status-main strong {
@@ -425,6 +469,18 @@
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 8px;
+    }
+
+    @media (max-width: 650px) {
+      .mini-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 420px) {
+      .mini-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
     }
 
     .mini-card {
@@ -470,10 +526,13 @@
       justify-content: space-between;
       gap: 10px;
       align-items: center;
+      flex-wrap: wrap;
     }
 
     .event-meta {
       color: #c7d2fe;
+      max-width: 440px;
+      line-height: 1.5;
     }
 
     .pill-soft {
@@ -483,6 +542,106 @@
       background: rgba(15, 23, 42, 0.9);
       font-size: 10px;
       color: #e5e7eb;
+      white-space: nowrap;
+    }
+
+    /* Contact section at end */
+    .contact-section {
+      margin-top: 10px;
+      max-width: 860px;
+      border-radius: 22px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.15), rgba(15, 23, 42, 0.96));
+      padding: 16px 16px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .contact-title {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .contact-text {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .contact-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      font-size: 13px;
+    }
+
+    .contact-row a {
+      color: #bae6fd;
+      text-decoration: none;
+      border-bottom: 1px dotted rgba(125, 211, 252, 0.7);
+    }
+
+    .contact-row a:hover {
+      border-bottom-style: solid;
+    }
+
+    .cta-row-bottom {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 4px;
+      align-items: center;
+    }
+
+    .btn {
+      border-radius: 999px;
+      padding: 9px 16px;
+      font-size: 13px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      font-family: inherit;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.16s ease-out;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: linear-gradient(140deg, #38bdf8, #a5b4fc);
+      color: #020617;
+      box-shadow: 0 14px 28px rgba(56, 189, 248, 0.4);
+      font-weight: 600;
+    }
+
+    .btn-primary:hover {
+      filter: brightness(1.03);
+      transform: translateY(-1px);
+      box-shadow: 0 18px 36px rgba(56, 189, 248, 0.6);
+    }
+
+    .btn-ghost {
+      background: rgba(15, 23, 42, 0.4);
+      border-color: rgba(148, 163, 184, 0.5);
+      color: var(--text-main);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    .btn-icon-circle {
+      width: 20px;
+      height: 20px;
+      border-radius: 999px;
+      border: 1px solid rgba(15, 23, 42, 0.85);
+      background: rgba(15, 23, 42, 0.98);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
     }
 
     /* Footer */
@@ -495,16 +654,7 @@
       justify-content: space-between;
       gap: 12px;
       color: var(--text-muted);
-    }
-
-    footer a {
-      color: #bae6fd;
-      text-decoration: none;
-      border-bottom: 1px dotted rgba(125, 211, 252, 0.7);
-    }
-
-    footer a:hover {
-      border-bottom-style: solid;
+      flex-wrap: wrap;
     }
 
     /* Simple JS demo tooltip */
@@ -512,32 +662,77 @@
       cursor: pointer;
       text-decoration: underline dotted;
     }
+
+    /* Mobile adjustments */
+    @media (max-width: 600px) {
+      body {
+        padding: 20px 10px 32px;
+      }
+
+      header {
+        padding: 16px 16px;
+      }
+
+      main {
+        padding: 20px 16px 20px;
+      }
+
+      .title {
+        font-size: clamp(24px, 7vw, 30px);
+      }
+
+      .subtitle {
+        font-size: 13px;
+      }
+
+      nav {
+        justify-content: flex-start;
+      }
+
+      .btn,
+      .status-pill {
+        white-space: normal;
+      }
+    }
   </style>
 </head>
 <body>
-  <div class="page">
+  <div class="page" id="top">
     <header>
       <div class="logo">
         <div class="logo-mark">B</div>
         <div>
           <div class="logo-text-main">BIMfly</div>
-          <div class="logo-text-sub">BIM &amp; Digital Engineering Studio</div>
+          <div class="logo-text-sub">
+            <span>Digital Engineering</span>
+          </div>
         </div>
       </div>
 
       <nav>
-        <a href="#overview"><span class="dot"></span>Overview</a>
-        <a href="#services"><span class="dot"></span>Services</a>
-        <a href="#process"><span class="dot"></span>Process</a>
-        <a href="#contact" class="primary"><span class="dot"></span>Book a call</a>
+        <a href="#top"><span class="dot"></span>Home</a>
+
+        <div class="nav-dropdown">
+          <button class="nav-trigger" onclick="location.href='#services'">
+            <span class="dot"></span>Services
+          </button>
+          <div class="nav-dropdown-menu">
+            <a href="information-management.html">Information Management</a>
+            <a href="mep-3d-modelling.html">MEP 3D Modelling</a>
+            <a href="bim-content-library.html">BIM Content Library</a>
+            <a href="research-and-development.html">Research &amp; Development</a>
+          </div>
+        </div>
+
+        <a href="#projects"><span class="dot"></span>Projects</a>
+        <a href="#contact" class="primary"><span class="dot"></span>Contact us</a>
       </nav>
     </header>
 
     <main>
-      <!-- LEFT: HERO -->
+      <!-- HERO -->
       <section class="hero" id="overview">
         <div class="badge">
-          <span class="badge-label">BIMfly Services</span>
           <span class="badge-pill">MEP-focused BIM &amp; coordination</span>
         </div>
 
@@ -553,17 +748,6 @@
           </p>
         </div>
 
-        <div class="cta-row" id="get-started">
-          <button class="btn btn-primary" onclick="showAlert()">
-            <span class="btn-icon-circle">📅</span>
-            Book a discovery call
-          </button>
-          <button class="btn btn-ghost">
-            <span class="btn-icon-circle">⬇</span>
-            Download service brochure (PDF)
-          </button>
-        </div>
-
         <div class="meta-row">
           <div class="meta-chip">
             <span class="meta-dot"></span>
@@ -575,50 +759,75 @@
           </div>
         </div>
 
+        <!-- SERVICES tiles on home -->
         <div class="services" id="services">
-          <article class="service-card">
-            <div class="service-label">Service One</div>
-            <div class="service-title">BIM Strategy &amp; Standards</div>
-            <div class="service-meta">
-              Set up your project for success with clear BIM requirements, templates and processes.
+          <a class="service-card" href="information-management.html">
+            <div class="service-image" style="background-image: url('https://images.pexels.com/photos/6476584/pexels-photo-6476584.jpeg?auto=compress&cs=tinysrgb&w=800');"></div>
+            <div class="service-body">
+              <div class="service-label">Service Stream 01</div>
+              <div class="service-title">Information Management</div>
+              <div class="service-meta">
+                Structured information, naming and data flows that make your BIM models easy to trust and use.
+              </div>
             </div>
-            <div class="service-tag-row">
-              <span class="service-tag">ISO 19650 aligned</span>
-              <span class="service-tag">BEP &amp; EIR support</span>
-              <span class="service-tag">BIM execution workflows</span>
-            </div>
-          </article>
+          </a>
 
-          <article class="service-card">
-            <div class="service-label">Service Two</div>
-            <div class="service-title">Model Production &amp; Coordination</div>
-            <div class="service-meta">
-              Robust MEP-centric modelling, clash detection and multidisciplinary coordination.
+          <a class="service-card" href="mep-3d-modelling.html">
+            <div class="service-image" style="background-image: url('https://images.pexels.com/photos/8472420/pexels-photo-8472420.jpeg?auto=compress&cs=tinysrgb&w=800');"></div>
+            <div class="service-body">
+              <div class="service-label">Service Stream 02</div>
+              <div class="service-title">MEP 3D Modelling</div>
+              <div class="service-meta">
+                Coordination-first MEP models that support design, construction sequencing and site teams.
+              </div>
             </div>
-            <div class="service-tag-row">
-              <span class="service-tag">Revit &amp; Navisworks</span>
-              <span class="service-tag">MEP coordination</span>
-              <span class="service-tag">Federated models</span>
-            </div>
-          </article>
+          </a>
 
-          <article class="service-card">
-            <div class="service-label">Service Three</div>
-            <div class="service-title">Automation, QA &amp; Dashboards</div>
-            <div class="service-meta">
-              Custom Dynamo / pyRevit tools and Power BI dashboards that keep your models healthy.
+          <a class="service-card" href="bim-content-library.html">
+            <div class="service-image" style="background-image: url('https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg?auto=compress&cs=tinysrgb&w=800');"></div>
+            <div class="service-body">
+              <div class="service-label">Service Stream 03</div>
+              <div class="service-title">BIM Content Library</div>
+              <div class="service-meta">
+                Clean, parametric families and templates that keep your teams consistent across projects.
+              </div>
             </div>
-            <div class="service-tag-row">
-              <span class="service-tag">Dynamo &amp; pyRevit</span>
-              <span class="service-tag">Model health checks</span>
-              <span class="service-tag">Power BI reporting</span>
+          </a>
+
+          <a class="service-card" href="research-and-development.html">
+            <div class="service-image" style="background-image: url('https://images.pexels.com/photos/3861964/pexels-photo-3861964.jpeg?auto=compress&cs=tinysrgb&w=800');"></div>
+            <div class="service-body">
+              <div class="service-label">Service Stream 04</div>
+              <div class="service-title">Research &amp; Development</div>
+              <div class="service-meta">
+                Automation, scripts and dashboards that unlock new levels of BIM efficiency and insight.
+              </div>
             </div>
-          </article>
+          </a>
         </div>
       </section>
 
-      <!-- RIGHT: STATUS PANEL -->
-      <aside class="side-panel" aria-label="BIMfly engagement snapshot" id="process">
+      <!-- PROJECTS -->
+      <section class="projects" id="projects">
+        <div class="section-heading">Projects</div>
+        <div class="projects-grid">
+          <div class="project-card">
+            <div class="project-title">Aviation</div>
+            <div>Information Management / MEP 3D Modelling</div>
+          </div>
+          <div class="project-card">
+            <div class="project-title">Mixed-use</div>
+            <div>MEP 3D Modelling / BIM Content Library</div>
+          </div>
+          <div class="project-card">
+            <div class="project-title">High-end Residential &amp; Villas</div>
+            <div>MEP 3D Modelling</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ENGAGEMENT SNAPSHOT (kept) -->
+      <section class="side-panel" aria-label="BIMfly engagement snapshot" id="engagement-snapshot">
         <div class="side-header">
           <div class="side-title">Engagement Snapshot</div>
           <div class="status-pill">
@@ -657,36 +866,58 @@
         <div class="event-list">
           <div class="event-item">
             <span class="event-meta">
-              Step 1 &mdash; <span class="hint" onclick="highlightCSS()">Discovery &amp; Scope</span>:
-              clarify deliverables, roles and BIM uses.
+              Step 1 — <span class="hint" onclick="highlightCSS()">Discovery &amp; Scope</span>:
+              clarify BIM uses, deliverables, roles and risk points.
             </span>
             <span class="pill-soft">Week 0–1</span>
           </div>
 
           <div class="event-item">
             <span class="event-meta">
-              Step 2 &mdash; Standards &amp; Setup: BEP, model structure, naming and QA rules.
+              Step 2 — Standards &amp; Setup: BEP, model structure, naming rules and QA checkpoints.
             </span>
             <span class="pill-soft">Week 1–2</span>
           </div>
 
           <div class="event-item">
             <span class="event-meta">
-              Step 3 &mdash; Coordination &amp; Automations: regular reviews, reports and scripts.
+              Step 3 — Coordination &amp; Automations: regular clash reviews, health reports and scripts.
             </span>
             <span class="pill-soft">Ongoing</span>
           </div>
         </div>
-      </aside>
+      </section>
+
+      <!-- CONTACT US (end of page, with CTAs) -->
+      <section class="contact-section" id="contact">
+        <div class="contact-title">Contact us</div>
+        <p class="contact-text">
+          Ready to reduce clashes, rework and last-minute drawing panic?  
+          Share a short description of your project and we’ll suggest how BIMfly can help with
+          information management, MEP 3D modelling, BIM content or automation.
+        </p>
+
+        <div class="contact-row">
+          <span>Email:</span>
+          <a href="mailto:hello@bimfly.studio">hello@bimfly.studio</a>
+        </div>
+
+        <div class="cta-row-bottom">
+          <button class="btn btn-primary" onclick="showAlert()">
+            <span class="btn-icon-circle">📅</span>
+            Book a discovery call
+          </button>
+          <button class="btn btn-ghost">
+            <span class="btn-icon-circle">⬇</span>
+            Download service brochure (PDF)
+          </button>
+        </div>
+      </section>
     </main>
 
-    <footer id="contact">
-      <span>
-        Ready to reduce clashes, rework and last-minute drawing panic?
-      </span>
-      <span>
-        Email <a href="mailto:hello@bimfly.studio">hello@bimfly.studio</a> to start a BIMfly engagement.
-      </span>
+    <footer>
+      <span>© BIMfly · BIM &amp; Digital Engineering Studio</span>
+      <span>Built with Quicksand · Mobile-first layout</span>
     </footer>
   </div>
 
@@ -695,7 +926,7 @@
       const statusText = document.getElementById("status-text");
       statusText.textContent = "Discovery call requested · We’ll get back shortly.";
       alert(
-        "BIMfly demo:\n\nIn the real site this button would open your booking link or contact form.\nFor now, you can replace this alert with Calendly or your email form."
+        "BIMfly demo:\n\nIn the real site this button would open your booking link or contact form.\nReplace this alert with Calendly, MS Bookings or an embedded form."
       );
       setTimeout(() => {
         statusText.textContent = "Now accepting new projects";
@@ -704,7 +935,7 @@
 
     function highlightCSS() {
       alert(
-        "Design tip:\n\nEdit the color variables inside the :root block in the <style> section.\nYou can re-theme BIMfly (brand colours) without touching every rule."
+        "Design tip:\n\nEdit the colour variables inside the :root block in the <style> section.\nYou can re-theme BIMfly to your brand colours without touching every rule."
       );
     }
   </script>
