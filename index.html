@@ -1,275 +1,712 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>BIMfly — MEP BIM | Automation | Digital Delivery</title>
-  <meta name="description" content="BIMfly — Surya Prakash Geddam | MEP BIM Lead. Revit automation, ISO 19650 delivery, pyRevit tools, and data-driven coordination." />
-  <meta property="og:title" content="BIMfly — MEP BIM | Automation | Digital Delivery" />
-  <meta property="og:description" content="Revit automation, ISO 19650 delivery, pyRevit tools, and data-driven coordination." />
-  <meta property="og:type" content="website" />
-  <meta property="og:image" content="/assets/og-image.png" />
-  <meta name="theme-color" content="#0f172a" />
-  <link rel="icon" href="/assets/favicon.png" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BIMfly · BIM Services Studio</title>
+
+  <!-- Quicksand font -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
   <style>
-    :root{
-      --bg: #0b1020;          /* deep navy */
-      --bg-soft:#121733;      /* softer panel */
-      --txt:#e5e7eb;          /* slate-200 */
-      --muted:#9aa3b2;        /* slate-400 */
-      --brand:#60a5fa;        /* blue-400 */
-      --brand-2:#34d399;      /* emerald-400 */
-      --card:#0f152a;         /* card base */
-      --border:#1f2a44;
-      --shadow: 0 10px 30px rgba(0,0,0,.35);
-      --radius: 18px;
+    :root {
+      --bg: #0f172a;
+      --bg-soft: #111827;
+      --accent: #38bdf8;
+      --accent-soft: rgba(56, 189, 248, 0.15);
+      --text-main: #e5e7eb;
+      --text-muted: #9ca3af;
+      --border-subtle: rgba(148, 163, 184, 0.3);
+      --radius-xl: 18px;
+      --shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.65);
+      --max-width: 1080px;
     }
-    *{box-sizing:border-box}
-    html,body{margin:0;padding:0;background:var(--bg);color:var(--txt);font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Inter,"Helvetica Neue",Arial,"Noto Sans",sans-serif;}
-    a{color:inherit;text-decoration:none}
-    img{max-width:100%;display:block}
-    .container{width:min(1100px,92vw);margin:0 auto}
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Quicksand", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #1f2937 0, #020617 52%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 32px 16px 48px;
+    }
+
+    .page {
+      width: 100%;
+      max-width: var(--max-width);
+      border-radius: 28px;
+      background: linear-gradient(145deg, rgba(15, 23, 42, 0.92), rgba(15, 23, 42, 0.98));
+      border: 1px solid rgba(148, 163, 184, 0.22);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+    }
+
     /* Header */
-    header{position:sticky;top:0;z-index:20;background:linear-gradient(180deg,rgba(11,16,32,.95),rgba(11,16,32,.8) 60%,transparent);backdrop-filter: blur(6px);border-bottom:1px solid rgba(255,255,255,.06)}
-    nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
-    .logo{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:.5px}
-    .logo-badge{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--brand),var(--brand-2));display:grid;place-items:center;box-shadow:var(--shadow)}
-    .logo-badge span{font-weight:900;color:#0b1020}
-    .nav-links{display:flex;gap:18px}
-    .nav-links a{padding:8px 12px;border-radius:10px;border:1px solid transparent}
-    .nav-links a:hover{border-color:var(--border);background:rgba(255,255,255,.04)}
-    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;border:1px solid var(--border);background:linear-gradient(180deg,#121733,#0e1530);box-shadow:var(--shadow)}
-    .btn:hover{transform:translateY(-1px)}
-    /* Hero */
-    .hero{padding:72px 0 36px}
-    .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center}
-    .kicker{color:var(--brand-2);font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-size:.78rem}
-    h1{font-size:clamp(1.8rem,3.4vw,3rem);line-height:1.1;margin:.35rem 0 1rem}
-    .lead{color:var(--muted);font-size:1.02rem;max-width:54ch}
-    .hero-cta{display:flex;gap:12px;margin-top:18px;flex-wrap:wrap}
-    .pill{display:inline-flex;gap:8px;align-items:center;background:rgba(96,165,250,.12);border:1px solid rgba(96,165,250,.35);padding:8px 10px;border-radius:999px;font-size:.9rem}
-    .glass{background:linear-gradient(180deg,rgba(52,211,153,.12),rgba(52,211,153,.06));border:1px solid rgba(52,211,153,.35)}
-    .hero-card{background: radial-gradient(1200px 400px at 30% -10%, rgba(96,165,250,.25), transparent 40%), var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px}
-    .status{display:flex;gap:14px;flex-wrap:wrap;margin-top:14px;color:var(--muted);font-size:.92rem}
-    /* Sections */
-    section{padding:54px 0;border-top:1px solid rgba(255,255,255,.06)}
-    h2{font-size:clamp(1.3rem,2.2vw,2rem);margin:.2rem 0 1.2rem}
-    .grid{display:grid;gap:16px}
-    .grid.cards{grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
-    .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
-    .card h3{margin:.4rem 0 .5rem;font-size:1.1rem}
-    .meta{color:var(--muted);font-size:.9rem}
-    .tag{display:inline-flex;align-items:center;gap:6px;padding:4px 8px;border-radius:999px;border:1px solid var(--border);font-size:.78rem;color:var(--muted)}
-    .stack{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-    /* Projects */
-    .project-thumb{border-radius:12px;border:1px solid var(--border);overflow:hidden;aspect-ratio:16/9;background:linear-gradient(135deg,#0f172a,#0b1020)}
-    /* Services */
-    .services .card{display:flex;flex-direction:column;gap:10px}
-    .price{margin-top:auto;font-weight:700}
-    /* Testimonials */
-    .testi{display:flex;flex-direction:column;gap:8px}
-    .testi .who{font-weight:700}
-    /* Contact */
-    form{display:grid;gap:10px}
-    input,textarea{background:#0b1020;color:var(--txt);border:1px solid var(--border);border-radius:12px;padding:12px 14px;font:inherit}
-    textarea{min-height:120px}
-    .inline{display:flex;gap:10px;flex-wrap:wrap}
-    footer{padding:28px 0;color:var(--muted)}
-    .footer-grid{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;border-top:1px solid rgba(255,255,255,.06);padding-top:18px}
-    /* Responsive */
-    @media (max-width: 900px){
-      .hero-grid{grid-template-columns:1fr}
+    header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      background: linear-gradient(120deg, rgba(15, 23, 42, 0.95), rgba(30, 64, 175, 0.35));
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .logo-mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 20% 0%, #e0f2fe 0, #38bdf8 35%, #0ea5e9 70%, #172554 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 700;
+      color: #0b1120;
+      box-shadow: 0 10px 22px rgba(56, 189, 248, 0.55);
+    }
+
+    .logo-text-main {
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      font-size: 16px;
+    }
+
+    .logo-text-sub {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: var(--text-muted);
+    }
+
+    nav {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    nav a {
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      text-decoration: none;
+      color: var(--text-muted);
+      border: 1px solid transparent;
+      transition: all 0.18s ease-out;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    nav a span.dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--text-muted);
+      opacity: 0.6;
+    }
+
+    nav a:hover {
+      color: var(--text-main);
+      border-color: rgba(148, 163, 184, 0.4);
+      background: rgba(15, 23, 42, 0.7);
+    }
+
+    nav a.primary {
+      color: #0b1120;
+      background: var(--accent);
+      border-color: rgba(56, 189, 248, 0.8);
+      box-shadow: 0 9px 18px rgba(56, 189, 248, 0.35);
+      font-weight: 600;
+    }
+
+    nav a.primary span.dot {
+      background: #0b1120;
+      opacity: 0.9;
+    }
+
+    /* Main layout */
+    main {
+      padding: 32px 24px 28px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+      gap: 26px;
+    }
+
+    @media (max-width: 880px) {
+      main {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    /* Left column (hero) */
+    .hero {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 999px;
+      padding: 4px 8px 4px 4px;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      font-size: 11px;
+      color: var(--text-muted);
+      width: fit-content;
+    }
+
+    .badge-label {
+      border-radius: 999px;
+      padding: 3px 9px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .badge-pill {
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    .title {
+      font-size: clamp(28px, 3vw, 34px);
+      line-height: 1.2;
+      font-weight: 700;
+      letter-spacing: 0.015em;
+    }
+
+    .title span.highlight {
+      background: linear-gradient(120deg, #7dd3fc, #a5b4fc);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .subtitle {
+      margin-top: 6px;
+      font-size: 14px;
+      color: var(--text-muted);
+      max-width: 36rem;
+    }
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 8px;
+      align-items: center;
+    }
+
+    .btn {
+      border-radius: 999px;
+      padding: 9px 16px;
+      font-size: 13px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      font-family: inherit;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.16s ease-out;
+    }
+
+    .btn-primary {
+      background: linear-gradient(140deg, #38bdf8, #a5b4fc);
+      color: #020617;
+      box-shadow: 0 14px 28px rgba(56, 189, 248, 0.4);
+      font-weight: 600;
+    }
+
+    .btn-primary:hover {
+      filter: brightness(1.03);
+      transform: translateY(-1px);
+      box-shadow: 0 18px 36px rgba(56, 189, 248, 0.6);
+    }
+
+    .btn-ghost {
+      background: rgba(15, 23, 42, 0.4);
+      border-color: rgba(148, 163, 184, 0.5);
+      color: var(--text-main);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    .btn-icon-circle {
+      width: 20px;
+      height: 20px;
+      border-radius: 999px;
+      border: 1px solid rgba(15, 23, 42, 0.85);
+      background: rgba(15, 23, 42, 0.98);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+    }
+
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 10px;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .meta-chip {
+      padding: 4px 9px;
+      border-radius: 999px;
+      border: 1px dashed rgba(148, 163, 184, 0.6);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .meta-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.35);
+    }
+
+    .meta-divider {
+      width: 1px;
+      height: 14px;
+      background: linear-gradient(to bottom, transparent, rgba(148, 163, 184, 0.8), transparent);
+    }
+
+    /* Services section */
+    .services {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    @media (max-width: 720px) {
+      .services {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 520px) {
+      .services {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .service-card {
+      border-radius: var(--radius-xl);
+      background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.18), rgba(15, 23, 42, 0.95));
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      padding: 12px 12px 11px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--text-muted);
+    }
+
+    .service-title {
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .service-meta {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .service-tag-row {
+      margin-top: 4px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      font-size: 10px;
+    }
+
+    .service-tag {
+      padding: 3px 7px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.55);
+    }
+
+    /* Right column (status panel) */
+    .side-panel {
+      border-radius: 22px;
+      padding: 14px 14px 14px;
+      background: radial-gradient(circle at top, rgba(30, 64, 175, 0.8), rgba(15, 23, 42, 0.97));
+      border: 1px solid rgba(129, 140, 248, 0.65);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .side-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .side-title {
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #c7d2fe;
+    }
+
+    .status-pill {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid rgba(191, 219, 254, 0.7);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.45);
+    }
+
+    .status-main {
+      padding: 8px 9px;
+      border-radius: 14px;
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid rgba(191, 219, 254, 0.6);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .status-main strong {
+      color: #e5e7eb;
+      font-weight: 600;
+    }
+
+    .mini-grid {
+      margin-top: 6px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .mini-card {
+      padding: 7px 8px;
+      border-radius: 12px;
+      background: rgba(15, 23, 42, 0.86);
+      border: 1px solid rgba(191, 219, 254, 0.42);
+      font-size: 11px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .mini-label {
+      color: #9ca3af;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 10px;
+    }
+
+    .mini-value {
+      font-weight: 600;
+      color: #e5e7eb;
+    }
+
+    .mini-sub {
+      font-size: 10px;
+      color: #cbd5f5;
+    }
+
+    .event-list {
+      margin-top: 4px;
+      padding-top: 6px;
+      border-top: 1px dashed rgba(191, 219, 254, 0.5);
+      font-size: 11px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .event-item {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .event-meta {
+      color: #c7d2fe;
+    }
+
+    .pill-soft {
+      padding: 3px 7px;
+      border-radius: 999px;
+      border: 1px solid rgba(191, 219, 254, 0.6);
+      background: rgba(15, 23, 42, 0.9);
+      font-size: 10px;
+      color: #e5e7eb;
+    }
+
+    /* Footer */
+    footer {
+      padding: 10px 24px 16px;
+      border-top: 1px dashed rgba(148, 163, 184, 0.4);
+      font-size: 11px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--text-muted);
+    }
+
+    footer a {
+      color: #bae6fd;
+      text-decoration: none;
+      border-bottom: 1px dotted rgba(125, 211, 252, 0.7);
+    }
+
+    footer a:hover {
+      border-bottom-style: solid;
+    }
+
+    /* Simple JS demo tooltip */
+    .hint {
+      cursor: pointer;
+      text-decoration: underline dotted;
     }
   </style>
 </head>
 <body>
-  <header>
-    <div class="container">
-      <nav>
-        <a href="#top" class="logo" aria-label="BIMfly home">
-          <span class="logo-badge"><span>BF</span></span>
-          <span>BIMfly</span>
-        </a>
-        <div class="nav-links">
-          <a href="#projects">Projects</a>
-          <a href="#services">Services</a>
-          <a href="#blog">Blog</a>
-          <a href="#contact" class="btn">Contact</a>
-        </div>
-      </nav>
-    </div>
-  </header>
-
-  <main id="top" class="container">
-    <!-- HERO -->
-    <section class="hero">
-      <div class="hero-grid">
+  <div class="page">
+    <header>
+      <div class="logo">
+        <div class="logo-mark">B</div>
         <div>
-          <span class="kicker">MEP BIM • Automation • ISO 19650</span>
-          <h1>Surya Prakash Geddam — BIM Lead building reliable digital delivery for complex assets.</h1>
-          <p class="lead">I help AEC teams deliver coordinated, data‑rich models and drawing sets at scale: Revit MEP, model federation, pyRevit tools, Dynamo automation, ACC workflows, and model health dashboards.</p>
-          <div class="hero-cta">
-            <a class="btn" href="#projects">View Projects</a>
-            <a class="pill glass" href="#services">Book a consult →</a>
-            <a class="pill" href="assets/CV_SuryaPrakashGeddam.pdf" target="_blank" rel="noopener">Download CV</a>
-          </div>
-          <div class="status">
-            <span class="tag">Available for freelance</span>
-            <span class="tag">London • Remote‑friendly</span>
-            <span class="tag">Revit • Dynamo • pyRevit • ACC</span>
-          </div>
-        </div>
-        <div class="hero-card">
-          <div class="project-thumb" aria-hidden="true"></div>
-          <div class="stack">
-            <span class="tag">Model federation strategy</span>
-            <span class="tag">MEP catalog & LOIN</span>
-            <span class="tag">Fire Alarm plugin (pyRevit)</span>
-            <span class="tag">QA/QC dashboards</span>
-          </div>
+          <div class="logo-text-main">BIMfly</div>
+          <div class="logo-text-sub">BIM &amp; Digital Engineering Studio</div>
         </div>
       </div>
-    </section>
 
-    <!-- PROJECTS -->
-    <section id="projects">
-      <h2>Selected Projects</h2>
-      <div class="grid cards">
-        <article class="card">
-          <div class="project-thumb"></div>
-          <h3>Runway / Private Aviation Asset</h3>
-          <p class="meta">Lead MEP BIM • Federation by volume • ACC workflows</p>
-          <div class="stack">
-            <span class="tag">Revit</span><span class="tag">Navisworks</span><span class="tag">ACC</span>
+      <nav>
+        <a href="#overview"><span class="dot"></span>Overview</a>
+        <a href="#services"><span class="dot"></span>Services</a>
+        <a href="#process"><span class="dot"></span>Process</a>
+        <a href="#contact" class="primary"><span class="dot"></span>Book a call</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- LEFT: HERO -->
+      <section class="hero" id="overview">
+        <div class="badge">
+          <span class="badge-label">BIMfly Services</span>
+          <span class="badge-pill">MEP-focused BIM &amp; coordination</span>
+        </div>
+
+        <div>
+          <h1 class="title">
+            High-impact <span class="highlight">BIM delivery</span>
+            for complex building and infrastructure projects.
+          </h1>
+          <p class="subtitle">
+            BIMfly helps design and construction teams deliver coordinated, data-driven
+            models — aligned with ISO 19650, focused on MEP integration and powered
+            by smart automation, dashboards and clear communication.
+          </p>
+        </div>
+
+        <div class="cta-row" id="get-started">
+          <button class="btn btn-primary" onclick="showAlert()">
+            <span class="btn-icon-circle">📅</span>
+            Book a discovery call
+          </button>
+          <button class="btn btn-ghost">
+            <span class="btn-icon-circle">⬇</span>
+            Download service brochure (PDF)
+          </button>
+        </div>
+
+        <div class="meta-row">
+          <div class="meta-chip">
+            <span class="meta-dot"></span>
+            Based in London · Delivering support worldwide
           </div>
-        </article>
-        <article class="card">
-          <div class="project-thumb"></div>
-          <h3>Central Plant Room</h3>
-          <p class="meta">Clash‑free MEP coordination • Drawing list automation</p>
-          <div class="stack">
-            <span class="tag">Revit</span><span class="tag">Dynamo</span><span class="tag">Power BI</span>
+          <div class="meta-divider"></div>
+          <div class="meta-chip">
+            <span>Specialised in MEP, coordination &amp; automation-driven BIM</span>
           </div>
-        </article>
-        <article class="card">
-          <div class="project-thumb"></div>
-          <h3>Fire Alarm Sensor Distribution</h3>
-          <p class="meta">pyRevit tool • LOIN & symbol standards • QA checks</p>
-          <div class="stack">
-            <span class="tag">pyRevit</span><span class="tag">WPF/C#</span><span class="tag">Revit API</span>
+        </div>
+
+        <div class="services" id="services">
+          <article class="service-card">
+            <div class="service-label">Service One</div>
+            <div class="service-title">BIM Strategy &amp; Standards</div>
+            <div class="service-meta">
+              Set up your project for success with clear BIM requirements, templates and processes.
+            </div>
+            <div class="service-tag-row">
+              <span class="service-tag">ISO 19650 aligned</span>
+              <span class="service-tag">BEP &amp; EIR support</span>
+              <span class="service-tag">BIM execution workflows</span>
+            </div>
+          </article>
+
+          <article class="service-card">
+            <div class="service-label">Service Two</div>
+            <div class="service-title">Model Production &amp; Coordination</div>
+            <div class="service-meta">
+              Robust MEP-centric modelling, clash detection and multidisciplinary coordination.
+            </div>
+            <div class="service-tag-row">
+              <span class="service-tag">Revit &amp; Navisworks</span>
+              <span class="service-tag">MEP coordination</span>
+              <span class="service-tag">Federated models</span>
+            </div>
+          </article>
+
+          <article class="service-card">
+            <div class="service-label">Service Three</div>
+            <div class="service-title">Automation, QA &amp; Dashboards</div>
+            <div class="service-meta">
+              Custom Dynamo / pyRevit tools and Power BI dashboards that keep your models healthy.
+            </div>
+            <div class="service-tag-row">
+              <span class="service-tag">Dynamo &amp; pyRevit</span>
+              <span class="service-tag">Model health checks</span>
+              <span class="service-tag">Power BI reporting</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- RIGHT: STATUS PANEL -->
+      <aside class="side-panel" aria-label="BIMfly engagement snapshot" id="process">
+        <div class="side-header">
+          <div class="side-title">Engagement Snapshot</div>
+          <div class="status-pill">
+            <span class="status-dot"></span>
+            <span id="status-text">Now accepting new projects</span>
           </div>
-        </article>
-        <article class="card">
-          <div class="project-thumb"></div>
-          <h3>Model Health & Analytics</h3>
-          <p class="meta">Data‑driven KPIs • automated reports • federated views</p>
-          <div class="stack">
-            <span class="tag">Power BI</span><span class="tag">Python</span><span class="tag">ACC</span>
+        </div>
+
+        <div class="status-main">
+          <strong>Typical collaboration starts with a 30–45 minute discovery call.</strong>
+          <br />
+          We review your current BIM setup, project constraints and delivery milestones,
+          then propose a focused package covering standards, modelling, coordination and automation.
+        </div>
+
+        <div class="mini-grid">
+          <div class="mini-card">
+            <div class="mini-label">Focus</div>
+            <div class="mini-value">MEP &amp; BIM</div>
+            <div class="mini-sub">Coordination-driven delivery</div>
           </div>
-        </article>
-      </div>
-    </section>
 
-    <!-- SERVICES -->
-    <section id="services" class="services">
-      <h2>Services</h2>
-      <div class="grid cards">
-        <div class="card">
-          <h3>Revit MEP Coordination</h3>
-          <p class="meta">End‑to‑end model setup, naming conventions, drawing production, and clash resolution.</p>
-          <div class="stack"><span class="tag">ISO 19650</span><span class="tag">LOIN</span><span class="tag">ACC</span></div>
-          <div class="price">From £450/day</div>
-        </div>
-        <div class="card">
-          <h3>Automation & Tools</h3>
-          <p class="meta">Dynamo scripts, pyRevit add‑ins, and custom QA/QC toolchains for repeatable delivery.</p>
-          <div class="stack"><span class="tag">Dynamo</span><span class="tag">pyRevit</span><span class="tag">Revit API</span></div>
-          <div class="price">From £600/day</div>
-        </div>
-        <div class="card">
-          <h3>Digital Delivery Strategy</h3>
-          <p class="meta">BEPs, model federation strategies, asset info requirements, and dashboards.</p>
-          <div class="stack"><span class="tag">BEP</span><span class="tag">AIR/EIR</span><span class="tag">Power BI</span></div>
-          <div class="price">From £700/day</div>
-        </div>
-      </div>
-    </section>
+          <div class="mini-card">
+            <div class="mini-label">Projects</div>
+            <div class="mini-value">Design &amp; Build</div>
+            <div class="mini-sub">Buildings &amp; Infrastructure</div>
+          </div>
 
-    <!-- TESTIMONIALS -->
-    <section id="testimonials">
-      <h2>What teams say</h2>
-      <div class="grid cards">
-        <div class="card testi">
-          <p>“Surya standardised our Revit workflows and unlocked a level of model stability we hadn’t seen before.”</p>
-          <span class="who">— Project Architect, F+P</span>
+          <div class="mini-card">
+            <div class="mini-label">Value</div>
+            <div class="mini-value">+20–30%</div>
+            <div class="mini-sub">Efficiency via automation*</div>
+          </div>
         </div>
-        <div class="card testi">
-          <p>“The pyRevit toolkit cut hours off our weekly coordination cycles.”</p>
-          <span class="who">— MEP Lead, Contractor</span>
+
+        <div class="event-list">
+          <div class="event-item">
+            <span class="event-meta">
+              Step 1 &mdash; <span class="hint" onclick="highlightCSS()">Discovery &amp; Scope</span>:
+              clarify deliverables, roles and BIM uses.
+            </span>
+            <span class="pill-soft">Week 0–1</span>
+          </div>
+
+          <div class="event-item">
+            <span class="event-meta">
+              Step 2 &mdash; Standards &amp; Setup: BEP, model structure, naming and QA rules.
+            </span>
+            <span class="pill-soft">Week 1–2</span>
+          </div>
+
+          <div class="event-item">
+            <span class="event-meta">
+              Step 3 &mdash; Coordination &amp; Automations: regular reviews, reports and scripts.
+            </span>
+            <span class="pill-soft">Ongoing</span>
+          </div>
         </div>
-      </div>
-    </section>
+      </aside>
+    </main>
 
-    <!-- BLOG -->
-    <section id="blog">
-      <h2>Notes & Articles</h2>
-      <div class="grid cards">
-        <article class="card">
-          <h3>ACC Federation: by volume vs by discipline</h3>
-          <p class="meta">A quick decision framework for complex assets.</p>
-          <a class="pill" href="#">Read →</a>
-        </article>
-        <article class="card">
-          <h3>LOIN: inclusive vs exclusive</h3>
-          <p class="meta">How we prevent scope creep and ensure delivery certainty.</p>
-          <a class="pill" href="#">Read →</a>
-        </article>
-        <article class="card">
-          <h3>Model Health KPIs that actually matter</h3>
-          <p class="meta">From warnings to performance baselines.</p>
-          <a class="pill" href="#">Read →</a>
-        </article>
-      </div>
-    </section>
-
-    <!-- CONTACT -->
-    <section id="contact">
-      <h2>Contact</h2>
-      <p class="meta">Want to collaborate or need help on a project? Send a note and I’ll get back to you.</p>
-      <form action="mailto:surya@example.com" method="post" enctype="text/plain">
-        <div class="inline">
-          <input name="name" placeholder="Your name" required>
-          <input name="email" type="email" placeholder="Your email" required>
-        </div>
-        <textarea name="message" placeholder="Tell me a little about your project…" required></textarea>
-        <button class="btn" type="submit">Send message</button>
-        <p class="meta">Prefer email? <a href="mailto:surya@example.com">surya@example.com</a></p>
-      </form>
-    </section>
-  </main>
-
-  <footer>
-    <div class="container footer-grid">
-      <small>© <span id="year"></span> BIMfly — Surya Prakash Geddam. All rights reserved.</small>
-      <div class="inline">
-        <a class="tag" href="https://github.com/yourusername" target="_blank" rel="noopener">GitHub</a>
-        <a class="tag" href="https://www.linkedin.com/in/" target="_blank" rel="noopener">LinkedIn</a>
-        <a class="tag" href="#">YouTube</a>
-      </div>
-    </div>
-  </footer>
+    <footer id="contact">
+      <span>
+        Ready to reduce clashes, rework and last-minute drawing panic?
+      </span>
+      <span>
+        Email <a href="mailto:hello@bimfly.studio">hello@bimfly.studio</a> to start a BIMfly engagement.
+      </span>
+    </footer>
+  </div>
 
   <script>
-    // Smooth anchor scroll
-    document.querySelectorAll('a[href^="#"]').forEach(a=>{
-      a.addEventListener('click',e=>{
-        const id=a.getAttribute('href').slice(1);
-        const el=document.getElementById(id);
-        if(el){e.preventDefault();el.scrollIntoView({behavior:'smooth',block:'start'});} 
-      });
-    });
-    // Year
-    document.getElementById('year').textContent=new Date().getFullYear();
+    function showAlert() {
+      const statusText = document.getElementById("status-text");
+      statusText.textContent = "Discovery call requested · We’ll get back shortly.";
+      alert(
+        "BIMfly demo:\n\nIn the real site this button would open your booking link or contact form.\nFor now, you can replace this alert with Calendly or your email form."
+      );
+      setTimeout(() => {
+        statusText.textContent = "Now accepting new projects";
+      }, 2200);
+    }
+
+    function highlightCSS() {
+      alert(
+        "Design tip:\n\nEdit the color variables inside the :root block in the <style> section.\nYou can re-theme BIMfly (brand colours) without touching every rule."
+      );
+    }
   </script>
 </body>
 </html>
