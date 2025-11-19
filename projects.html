@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BIMfly · Projects</title>
+
+  <!-- Quicksand font -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #0f172a;
+      --bg-soft: #111827;
+      --accent: #38bdf8;
+      --accent-soft: rgba(56, 189, 248, 0.15);
+      --text-main: #e5e7eb;
+      --text-muted: #9ca3af;
+      --border-subtle: rgba(148, 163, 184, 0.3);
+      --radius-xl: 18px;
+      --shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.65);
+      --max-width: 1080px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Quicksand", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #1f2937 0, #020617 52%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 32px 16px 48px;
+    }
+
+    .page {
+      width: 100%;
+      max-width: var(--max-width);
+      border-radius: 28px;
+      background: linear-gradient(145deg, rgba(15, 23, 42, 0.92), rgba(15, 23, 42, 0.98));
+      border: 1px solid rgba(148, 163, 184, 0.22);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+    }
+
+    /* Header (sticky, same as index.html) */
+    header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      background: linear-gradient(120deg, rgba(15, 23, 42, 0.97), rgba(30, 64, 175, 0.45));
+      flex-wrap: wrap;
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(10px);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .logo-img {
+      height: 32px;
+      width: auto;
+      display: block;
+    }
+
+    @media (min-width: 800px) {
+      .logo-img {
+        height: 36px;
+      }
+    }
+
+    .logo-text-main {
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      font-size: 20px;
+    }
+
+    nav {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
+    nav a,
+    nav button.nav-trigger {
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      text-decoration: none;
+      color: var(--text-muted);
+      border: 1px solid transparent;
+      background: transparent;
+      transition: all 0.18s ease-out;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    nav a span.dot,
+    nav button.nav-trigger span.dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--text-muted);
+      opacity: 0.6;
+    }
+
+    nav a:hover,
+    nav button.nav-trigger:hover {
+      color: var(--text-main);
+      border-color: rgba(148, 163, 184, 0.4);
+      background: rgba(15, 23, 42, 0.7);
+    }
+
+    nav a.primary {
+      color: #0b1120;
+      background: var(--accent);
+      border-color: rgba(56, 189, 248, 0.8);
+      box-shadow: 0 9px 18px rgba(56, 189, 248, 0.35);
+      font-weight: 600;
+    }
+
+    nav a.primary span.dot {
+      background: #0b1120;
+      opacity: 0.9;
+    }
+
+    /* Dropdown (same behaviour as home) */
+    .nav-dropdown {
+      position: relative;
+    }
+
+    .nav-dropdown-menu {
+      position: absolute;
+      top: 120%;
+      left: 0;
+      min-width: 210px;
+      background: #0284c7;
+      border-radius: 0 0 10px 10px;
+      box-shadow: 0 10px 20px rgba(15, 23, 42, 0.6);
+      display: none;
+      flex-direction: column;
+      padding: 10px 0;
+      z-index: 50;
+    }
+
+    .nav-dropdown-menu a {
+      padding: 9px 18px;
+      border-radius: 0;
+      font-size: 12px;
+      color: #f9fafb;
+      border: none;
+      background: transparent;
+      gap: 0;
+    }
+
+    .nav-dropdown-menu a:hover {
+      background: rgba(15, 23, 42, 0.2);
+      border: none;
+    }
+
+    .nav-dropdown:hover .nav-dropdown-menu {
+      display: flex;
+    }
+
+    /* Mobile hamburger */
+    .nav-toggle {
+      display: none;
+      background: transparent;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      border-radius: 999px;
+      padding: 6px 9px;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      color: var(--text-main);
+      font-size: 11px;
+    }
+
+    .nav-toggle-bars {
+      display: inline-flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .nav-toggle-bars span {
+      width: 14px;
+      height: 2px;
+      border-radius: 999px;
+      background: var(--text-main);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
+    @media (max-width: 720px) {
+      header {
+        align-items: flex-start;
+      }
+
+      .nav-toggle {
+        display: inline-flex;
+        margin-left: auto;
+      }
+
+      .nav-links {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-top: 10px;
+      }
+
+      body.nav-open .nav-links {
+        display: flex;
+      }
+    }
+
+    /* Main layout for projects page */
+    main {
+      padding: 24px 20px 24px;
+    }
+
+    .wrap {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-size: 26px;
+      margin: 8px 0 4px;
+    }
+
+    .page-intro {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--text-muted);
+      max-width: 640px;
+      margin-bottom: 18px;
+    }
+
+    .projects-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+      margin-bottom: 24px;
+    }
+
+    .project-section {
+      border-radius: 20px;
+      background: #0f172a;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      overflow: hidden;
+    }
+
+    .project-top {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.3fr);
+    }
+
+    @media (max-width: 720px) {
+      .project-top {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .project-image {
+      min-height: 160px;
+      background-size: cover;
+      background-position: center;
+      filter: brightness(0.9);
+    }
+
+    .project-body {
+      padding: 14px 14px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .project-tag {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--text-muted);
+    }
+
+    .project-title {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .project-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .project-body p,
+    .project-body ul {
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .project-body ul {
+      margin-left: 18px;
+      color: #d1d5db;
+    }
+
+    .stack {
+      margin-top: 4px;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .stack span {
+      display: inline-block;
+      padding: 3px 7px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      margin-right: 6px;
+      margin-top: 3px;
+    }
+
+    .bottom-note {
+      margin-top: 12px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .bottom-note strong {
+      color: var(--text-main);
+    }
+
+    /* Engagement Snapshot (from old projects page) */
+    .side-panel {
+      margin-top: 32px;
+      border-radius: 22px;
+      padding: 14px 14px 14px;
+      background: radial-gradient(circle at top, rgba(30, 64, 175, 0.8), rgba(15, 23, 42, 0.97));
+      border: 1px solid rgba(129, 140, 248, 0.65);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .side-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .side-title {
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #c7d2fe;
+    }
+
+    .status-pill {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid rgba(191, 219, 254, 0.7);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.45);
+    }
+
+    .status-main {
+      padding: 8px 9px;
+      border-radius: 14px;
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid rgba(191, 219, 254, 0.6);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .status-main strong {
+      color: #e5e7eb;
+      font-weight: 600;
+    }
+
+    .mini-grid {
+      margin-top: 6px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    @media (max-width: 650px) {
+      .mini-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 420px) {
+      .mini-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .mini-card {
+      padding: 7px 8px;
+      border-radius: 12px;
+      background: rgba(15, 23, 42, 0.86);
+      border: 1px solid rgba(191, 219, 254, 0.42);
+      font-size: 11px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .mini-label {
+      color: #9ca3af;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 10px;
+    }
+
+    .mini-value {
+      font-weight: 600;
+      color: #e5e7eb;
+    }
+
+    .mini-sub {
+      font-size: 10px;
+      color: #cbd5f5;
+    }
+
+    .event-list {
+      margin-top: 4px;
+      padding-top: 6px;
+      border-top: 1px dashed rgba(191, 219, 254, 0.5);
+      font-size: 11px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .event-item {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .event-meta {
+      color: #c7d2fe;
+      max-width: 440px;
+      line-height: 1.5;
+    }
+
+    .pill-soft {
+      padding: 3px 7px;
+      border-radius: 999px;
+      border: 1px solid rgba(191, 219, 254, 0.6);
+      background: rgba(15, 23, 42, 0.9);
+      font-size: 10px;
+      color: #e5e7eb;
+      white-space: nowrap;
+    }
+
+    /* FOOTER – same as index.html (latest version) */
+    footer {
+      background: #020617;
+      border-top: 1px solid rgba(15, 23, 42, 0.9);
+      padding: 24px 24px 16px;
+      color: #e5e7eb;
+    }
+
+    .footer-inner {
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) repeat(3, minmax(0, 1.4fr));
+      gap: 32px;
+      border-bottom: 1px solid rgba(31, 41, 55, 0.9);
+      padding-bottom: 18px;
+      margin-bottom: 10px;
+    }
+
+    @media (max-width: 880px) {
+      .footer-inner {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .footer-inner {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .footer-logo-block p {
+      font-size: 13px;
+      color: #9ca3af;
+      line-height: 1.7;
+      margin-top: 10px;
+      max-width: 260px;
+    }
+
+    .footer-logo-small {
+      height: 40px;
+      width: auto;
+      margin-bottom: 4px;
+    }
+
+    .footer-heading {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .footer-list {
+      list-style: none;
+      font-size: 13px;
+      color: #d1d5db;
+    }
+
+    .footer-list li + li {
+      margin-top: 6px;
+    }
+
+    .footer-list a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .footer-list a:hover {
+      text-decoration: underline;
+    }
+
+    .footer-location-icon,
+    .footer-contact-icon {
+      margin-right: 6px;
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      font-size: 11px;
+      color: #6b7280;
+      flex-wrap: wrap;
+    }
+
+    .footer-links-small a {
+      margin-left: 10px;
+      color: #9ca3af;
+      text-decoration: none;
+      font-size: 11px;
+    }
+
+    .footer-links-small a:hover {
+      text-decoration: underline;
+    }
+
+    /* Mobile tweaks */
+    @media (max-width: 600px) {
+      body {
+        padding: 20px 10px 32px;
+      }
+
+      header {
+        padding: 16px 16px;
+      }
+
+      main {
+        padding: 20px 16px 20px;
+      }
+
+      .project-image {
+        display: none;
+      }
+
+      .project-section {
+        min-height: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="logo">
+        <img src="bimfly-logo.svg" alt="BIMfly logo" class="logo-img" />
+        <div>
+          <div class="logo-text-main">BIMfly</div>
+        </div>
+      </div>
+
+      <button class="nav-toggle" type="button" onclick="toggleNav()" aria-label="Toggle navigation">
+        <div class="nav-toggle-bars">
+          <span></span><span></span><span></span>
+        </div>
+        <span>Menu</span>
+      </button>
+
+      <nav class="nav-links">
+        <a href="index.html"><span class="dot"></span>Home</a>
+
+        <div class="nav-dropdown">
+          <button class="nav-trigger" type="button" onclick="location.href='index.html#services'">
+            <span class="dot"></span>Services
+          </button>
+          <div class="nav-dropdown-menu">
+            <a href="information-management.html">Information Management</a>
+            <a href="mep-3d-modelling.html">MEP 3D Modelling</a>
+            <a href="bim-content-library.html">BIM Content Library</a>
+            <a href="research-and-development.html">Research &amp; Development</a>
+          </div>
+        </div>
+
+        <a href="projects.html"><span class="dot"></span>Projects</a>
+        <a href="contact.html" class="primary"><span class="dot"></span>Contact</a>
+      </nav>
+    </header>
+
+    <main>
+      <div class="wrap">
+        <h1>Projects</h1>
+        <p class="page-intro">
+          BIMfly supports projects where coordinated MEP models and clear information management
+          are critical to delivery. Below is a snapshot of the sectors we focus on and the type
+          of BIM support typically provided.
+        </p>
+
+        <div class="projects-grid">
+          <!-- Aviation -->
+          <section class="project-section" id="aviation">
+            <div class="project-top">
+              <div class="project-image"
+                   style="background-image:url('https://images.pexels.com/photos/46148/airport-lounge-waiting-room-chairs-46148.jpeg?auto=compress&cs=tinysrgb&w=1200');">
+              </div>
+              <div class="project-body">
+                <div class="project-tag">Sector · Aviation</div>
+                <div class="project-title">Aviation Campuses &amp; Terminals</div>
+                <div class="project-sub">Information Management · MEP 3D Modelling</div>
+                <p>
+                  From terminal lounges to support buildings, aviation assets rely on resilient
+                  MEP systems and reliable project data. BIMfly focuses on robust models and
+                  clear information requirements that work across consultants, contractors and
+                  client teams.
+                </p>
+                <ul>
+                  <li>ISO 19650-aligned information management for airside and landside zones</li>
+                  <li>MEP 3D models for terminal buildings, lounges and technical areas</li>
+                  <li>Federated coordination with architecture, structure and specialist systems</li>
+                  <li>Health checks and dashboards to keep models issue-free over long programmes</li>
+                </ul>
+                <div class="stack">
+                  <span>Information Management</span>
+                  <span>MEP 3D Modelling</span>
+                  <span>Model Health Dashboards</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Mixed-use -->
+          <section class="project-section" id="mixed-use">
+            <div class="project-top">
+              <div class="project-image"
+                   style="background-image:url('https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=1200');">
+              </div>
+              <div class="project-body">
+                <div class="project-tag">Sector · Mixed-use</div>
+                <div class="project-title">Mixed-use Districts &amp; Energy Centres</div>
+                <div class="project-sub">MEP 3D Modelling · BIM Content Library</div>
+                <p>
+                  Mixed-use schemes combine retail, office, residential and public space within
+                  one coordinated model. BIMfly helps keep these environments aligned by pairing
+                  clean, reusable BIM content with consistent MEP modelling standards.
+                </p>
+                <ul>
+                  <li>MEP models for central plant rooms, podiums and tower zones</li>
+                  <li>Standardised BIM families and templates for repeated typologies</li>
+                  <li>Support for phased delivery, shell &amp; core and fit-out stages</li>
+                  <li>Clear drawing and model outputs for on-site coordination meetings</li>
+                </ul>
+                <div class="stack">
+                  <span>MEP 3D Modelling</span>
+                  <span>BIM Content Library</span>
+                  <span>Phased Delivery Support</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Residential & Villas -->
+          <section class="project-section" id="residential-villas">
+            <div class="project-top">
+              <div class="project-image"
+                   style="background-image:url('https://images.pexels.com/photos/439391/pexels-photo-439391.jpeg?auto=compress&cs=tinysrgb&w=1200');">
+              </div>
+              <div class="project-body">
+                <div class="project-tag">Sector · Residential</div>
+                <div class="project-title">High-end Residential &amp; Villas</div>
+                <div class="project-sub">MEP 3D Modelling</div>
+                <p>
+                  Luxury villas and high-end apartments demand services that are discreet but
+                  accessible. BIMfly develops coordination-ready MEP models that respect tight
+                  ceiling zones, bespoke joinery and complex interiors.
+                </p>
+                <ul>
+                  <li>Detailed mechanical, electrical and public health models</li>
+                  <li>Close coordination with interior design and architectural teams</li>
+                  <li>Support for design changes and on-site clashes during construction</li>
+                  <li>As-built updates and models ready for facilities management</li>
+                </ul>
+                <div class="stack">
+                  <span>MEP 3D Modelling</span>
+                  <span>Interior Coordination</span>
+                  <span>As-built Models</span>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <p class="bottom-note">
+          <strong>Next step:</strong> if you’d like to see how these approaches could apply to your
+          project, email <a href="mailto:hello@bimfly.studio">hello@bimfly.studio</a> with a short
+          summary of your scope and programme.
+        </p>
+
+        <!-- Engagement Snapshot -->
+        <section class="side-panel" aria-label="BIMfly engagement snapshot" id="engagement-snapshot">
+          <div class="side-header">
+            <div class="side-title">Engagement Snapshot</div>
+            <div class="status-pill">
+              <span class="status-dot"></span>
+              <span id="status-text">Now accepting new projects</span>
+            </div>
+          </div>
+
+          <div class="status-main">
+            <strong>Typical collaboration starts with a 30–45 minute discovery call.</strong>
+            <br />
+            We review your current BIM setup, project constraints and delivery milestones,
+            then propose a focused package covering standards, modelling, coordination and automation.
+          </div>
+
+          <div class="mini-grid">
+            <div class="mini-card">
+              <div class="mini-label">Focus</div>
+              <div class="mini-value">MEP &amp; BIM</div>
+              <div class="mini-sub">Coordination-driven delivery</div>
+            </div>
+
+            <div class="mini-card">
+              <div class="mini-label">Projects</div>
+              <div class="mini-value">Design &amp; Build</div>
+              <div class="mini-sub">Buildings &amp; Infrastructure</div>
+            </div>
+
+            <div class="mini-card">
+              <div class="mini-label">Value</div>
+              <div class="mini-value">+20–30%</div>
+              <div class="mini-sub">Efficiency via automation*</div>
+            </div>
+          </div>
+
+          <div class="event-list">
+            <div class="event-item">
+              <span class="event-meta">
+                Step 1 — Discovery &amp; Scope: clarify BIM uses, deliverables, roles and risk points.
+              </span>
+              <span class="pill-soft">Week 0–1</span>
+            </div>
+
+            <div class="event-item">
+              <span class="event-meta">
+                Step 2 — Standards &amp; Setup: BEP, model structure, naming rules and QA checkpoints.
+              </span>
+              <span class="pill-soft">Week 1–2</span>
+            </div>
+
+            <div class="event-item">
+              <span class="event-meta">
+                Step 3 — Coordination &amp; Automations: regular clash reviews, health reports and scripts.
+              </span>
+              <span class="pill-soft">Ongoing</span>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer>
+      <div class="footer-inner">
+        <div class="footer-logo-block">
+          <img src="bimfly-logo.svg" alt="BIMfly logo" class="footer-logo-small" />
+          <p>
+            BIMfly is a BIM &amp; digital engineering focused on MEP-led coordination,
+            robust information management and automation-driven delivery for buildings and infrastructure.
+          </p>
+        </div>
+
+        <div>
+          <div class="footer-heading">Quick Links</div>
+          <ul class="footer-list">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="information-management.html">Information Management</a></li>
+            <li><a href="mep-3d-modelling.html">MEP 3D Modelling</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="footer-heading">Location</div>
+          <ul class="footer-list">
+            <li>
+              <span class="footer-location-icon">📍</span>
+              20 New Mossford Way, Ilford, London, United Kingdom<br />
+              (Remote support worldwide)
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="footer-heading">Contact</div>
+          <ul class="footer-list">
+            <li>
+              <span class="footer-contact-icon">📞</span>
+              UK: +44 07417 587052
+            </li>
+            <li>
+              <span class="footer-contact-icon">✉️</span>
+              Email: <a href="mailto:bimflyservices@gmail.com">bimflyservices@gmail.com</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2025 BIMfly — BIM &amp; Digital Engineering. All rights reserved.</span>
+        <span class="footer-links-small">
+          <a href="#">GitHub</a>
+          <a href="#">LinkedIn</a>
+          <a href="#">YouTube</a>
+        </span>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    function toggleNav() {
+      document.body.classList.toggle('nav-open');
+    }
+  </script>
+</body>
+</html>

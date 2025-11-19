@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BIMfly · BIM Services Studio</title>
+  <title>BIMfly · BIM Services</title>
 
   <!-- Quicksand font -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,6 +21,8 @@
       --radius-xl: 18px;
       --shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.65);
       --max-width: 1080px;
+      --green: #22c55e;
+      --green-soft: #16a34a;
     }
 
     * {
@@ -49,7 +51,7 @@
       overflow: hidden;
     }
 
-    /* Header */
+    /* Header (sticky) */
     header {
       padding: 20px 24px;
       border-bottom: 1px solid var(--border-subtle);
@@ -57,8 +59,12 @@
       align-items: center;
       justify-content: space-between;
       gap: 16px;
-      background: linear-gradient(120deg, rgba(15, 23, 42, 0.95), rgba(30, 64, 175, 0.35));
+      background: linear-gradient(120deg, rgba(15, 23, 42, 0.97), rgba(30, 64, 175, 0.45));
       flex-wrap: wrap;
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(10px);
     }
 
     .logo {
@@ -67,37 +73,22 @@
       gap: 8px;
     }
 
-    .logo-mark {
-      width: 32px;
+    .logo-img {
       height: 32px;
-      border-radius: 999px;
-      background: radial-gradient(circle at 20% 0%, #e0f2fe 0, #38bdf8 35%, #0ea5e9 70%, #172554 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      font-weight: 700;
-      color: #0b1120;
-      box-shadow: 0 10px 22px rgba(56, 189, 248, 0.55);
+      width: auto;
+      display: block;
+    }
+
+    @media (min-width: 800px) {
+      .logo-img {
+        height: 36px;
+      }
     }
 
     .logo-text-main {
       font-weight: 700;
       letter-spacing: 0.04em;
-      font-size: 16px;
-    }
-
-    .logo-text-sub {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.22em;
-      color: var(--text-muted);
-      max-width: 260px;
-      line-height: 1.4;
-    }
-
-    .logo-text-sub span {
-      display: block;
+      font-size: 20px;
     }
 
     nav {
@@ -170,7 +161,7 @@
       display: none;
       flex-direction: column;
       padding: 10px 0;
-      z-index: 20;
+      z-index: 50;
     }
 
     .nav-dropdown-menu a {
@@ -192,6 +183,81 @@
       display: flex;
     }
 
+    /* Mobile hamburger */
+    .nav-toggle {
+      display: none;
+      background: transparent;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      border-radius: 999px;
+      padding: 6px 9px;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      color: var(--text-main);
+      font-size: 11px;
+    }
+
+    .nav-toggle-bars {
+      display: inline-flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .nav-toggle-bars span {
+      width: 14px;
+      height: 2px;
+      border-radius: 999px;
+      background: var(--text-main);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
+    @media (max-width: 720px) {
+      header {
+        align-items: flex-start;
+      }
+
+      .nav-toggle {
+        display: inline-flex;
+        margin-left: auto;
+      }
+
+      .nav-links {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-top: 10px;
+      }
+
+      body.nav-open .nav-links {
+        display: flex;
+      }
+    }
+
+    /* hero banner image */
+    .hero-banner {
+      width: 100%;
+      height: 400px;
+      background-image: url('assets/home/building-services.jpg');
+      background-size: cover;
+      background-position: center;
+      border-bottom: 1px solid rgba(15, 23, 42, 0.9);
+    }
+
+    @media (max-width: 600px) {
+      .hero-banner {
+        height: 180px;
+      }
+    }
+
     /* Main layout */
     main {
       padding: 24px 20px 24px;
@@ -205,7 +271,7 @@
       display: flex;
       flex-direction: column;
       gap: 20px;
-      max-width: 860px;
+      max-width: 950px;
     }
 
     .badge {
@@ -221,11 +287,10 @@
       width: fit-content;
     }
 
-    }
-
     .badge-pill {
       padding: 3px 9px;
       border-radius: 999px;
+      text-transform: uppercase;
       background: rgba(15, 23, 42, 0.9);
     }
 
@@ -246,8 +311,8 @@
       margin-top: 6px;
       font-size: 14px;
       color: var(--text-muted);
-      max-width: 36rem;
-      line-height: 1.6;
+      max-width: 50rem;
+      line-height: 1.5;
     }
 
     .meta-row {
@@ -282,9 +347,27 @@
       background: linear-gradient(to bottom, transparent, rgba(148, 163, 184, 0.8), transparent);
     }
 
-    /* Services tiles on home */
-    .services {
+    /* Services */
+    .services-heading {
       margin-top: 22px;
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    /* wrapper so services align with hero width */
+    .services-section {
+      max-width: 980px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .services {
+      margin-top: 10px;
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 12px;
@@ -313,11 +396,11 @@
       color: inherit;
       display: flex;
       flex-direction: column;
-      min-height: 190px;
+      min-height: 500px;
     }
 
     .service-image {
-      height: 90px;
+      height: 400px;
       background-size: cover;
       background-position: center;
       filter: brightness(0.9);
@@ -351,17 +434,17 @@
       line-height: 1.5;
     }
 
-    /* Projects section */
+    /* Projects */
     .projects {
       margin-top: 10px;
-      max-width: 860px;
+      max-width: 980px;
       display: flex;
       flex-direction: column;
       gap: 10px;
     }
 
     .section-heading {
-      font-size: 16px;
+      font-size: 20px;
       font-weight: 600;
       letter-spacing: 0.08em;
       text-transform: uppercase;
@@ -370,7 +453,7 @@
 
     .projects-grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 10px;
     }
 
@@ -387,283 +470,146 @@
     }
 
     .project-card {
-      border-radius: 14px;
-      border: 1px dashed rgba(148, 163, 184, 0.6);
-      padding: 9px 10px;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #111827;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      min-height: 230px;
+    }
+
+    .project-image {
+      height: 180px;
+      background-size: cover;
+      background-position: center;
+      filter: brightness(0.9);
+    }
+
+    .project-body {
+      padding: 9px 10px 10px;
       font-size: 11px;
       color: var(--text-muted);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 1;
     }
 
     .project-title {
       font-weight: 600;
       color: var(--text-main);
-      margin-bottom: 4px;
       font-size: 12px;
     }
 
-    /* Engagement Snapshot */
-    .side-panel {
-      border-radius: 22px;
-      padding: 14px 14px 14px;
-      background: radial-gradient(circle at top, rgba(30, 64, 175, 0.8), rgba(15, 23, 42, 0.97));
-      border: 1px solid rgba(129, 140, 248, 0.65);
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      position: relative;
-      overflow: hidden;
-      max-width: 860px;
-    }
-
-    .side-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .side-title {
-      font-size: 12px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: #c7d2fe;
-    }
-
-    .status-pill {
-      font-size: 11px;
-      padding: 3px 8px;
-      border-radius: 999px;
-      background: rgba(15, 23, 42, 0.95);
-      border: 1px solid rgba(191, 219, 254, 0.7);
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      white-space: nowrap;
-    }
-
-    .status-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 999px;
-      background: #22c55e;
-      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.45);
-    }
-
-    .status-main {
-      padding: 8px 9px;
-      border-radius: 14px;
-      background: rgba(15, 23, 42, 0.75);
-      border: 1px solid rgba(191, 219, 254, 0.6);
-      font-size: 12px;
+    .project-meta {
       line-height: 1.5;
     }
 
-    .status-main strong {
+    .project-tag {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: #9ca3af;
+    }
+
+    /* FOOTER */
+    footer {
+      background: #020617;
+      border-top: 1px solid rgba(15, 23, 42, 0.9);
+      padding: 24px 24px 16px;
       color: #e5e7eb;
-      font-weight: 600;
     }
 
-    .mini-grid {
-      margin-top: 6px;
+    .footer-inner {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 8px;
+      grid-template-columns: minmax(0, 2fr) repeat(3, minmax(0, 1.4fr));
+      gap: 32px;
+      border-bottom: 1px solid rgba(31, 41, 55, 0.9);
+      padding-bottom: 18px;
+      margin-bottom: 10px;
     }
 
-    @media (max-width: 650px) {
-      .mini-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+    @media (max-width: 880px) {
+      .footer-inner {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
       }
     }
 
-    @media (max-width: 420px) {
-      .mini-grid {
+    @media (max-width: 640px) {
+      .footer-inner {
         grid-template-columns: minmax(0, 1fr);
       }
     }
 
-    .mini-card {
-      padding: 7px 8px;
-      border-radius: 12px;
-      background: rgba(15, 23, 42, 0.86);
-      border: 1px solid rgba(191, 219, 254, 0.42);
-      font-size: 11px;
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .mini-label {
+    .footer-logo-block p {
+      font-size: 13px;
       color: #9ca3af;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      font-size: 10px;
-    }
-
-    .mini-value {
-      font-weight: 600;
-      color: #e5e7eb;
-    }
-
-    .mini-sub {
-      font-size: 10px;
-      color: #cbd5f5;
-    }
-
-    .event-list {
-      margin-top: 4px;
-      padding-top: 6px;
-      border-top: 1px dashed rgba(191, 219, 254, 0.5);
-      font-size: 11px;
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-    }
-
-    .event-item {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-
-    .event-meta {
-      color: #c7d2fe;
-      max-width: 440px;
-      line-height: 1.5;
-    }
-
-    .pill-soft {
-      padding: 3px 7px;
-      border-radius: 999px;
-      border: 1px solid rgba(191, 219, 254, 0.6);
-      background: rgba(15, 23, 42, 0.9);
-      font-size: 10px;
-      color: #e5e7eb;
-      white-space: nowrap;
-    }
-
-    /* Contact section at end */
-    .contact-section {
+      line-height: 1.7;
       margin-top: 10px;
-      max-width: 860px;
-      border-radius: 22px;
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.15), rgba(15, 23, 42, 0.96));
-      padding: 16px 16px 18px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
+      max-width: 260px;
     }
 
-    .contact-title {
-      font-size: 18px;
+    .footer-logo-small {
+      height: 40px;
+      width: auto;
+      margin-bottom: 4px;
+    }
+
+    .footer-heading {
+      font-size: 16px;
       font-weight: 600;
+      margin-bottom: 10px;
     }
 
-    .contact-text {
+    .footer-list {
+      list-style: none;
       font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.6;
+      color: #d1d5db;
     }
 
-    .contact-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      align-items: center;
-      font-size: 13px;
+    .footer-list li + li {
+      margin-top: 6px;
     }
 
-    .contact-row a {
-      color: #bae6fd;
+    .footer-list a {
+      color: inherit;
       text-decoration: none;
-      border-bottom: 1px dotted rgba(125, 211, 252, 0.7);
     }
 
-    .contact-row a:hover {
-      border-bottom-style: solid;
+    .footer-list a:hover {
+      text-decoration: underline;
     }
 
-    .cta-row-bottom {
+    .footer-location-icon,
+    .footer-contact-icon {
+      margin-right: 6px;
+    }
+
+    .footer-bottom {
       display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 4px;
-      align-items: center;
-    }
-
-    .btn {
-      border-radius: 999px;
-      padding: 9px 16px;
-      font-size: 13px;
-      border: 1px solid transparent;
-      cursor: pointer;
-      font-family: inherit;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      transition: all 0.16s ease-out;
-      white-space: nowrap;
-    }
-
-    .btn-primary {
-      background: linear-gradient(140deg, #38bdf8, #a5b4fc);
-      color: #020617;
-      box-shadow: 0 14px 28px rgba(56, 189, 248, 0.4);
-      font-weight: 600;
-    }
-
-    .btn-primary:hover {
-      filter: brightness(1.03);
-      transform: translateY(-1px);
-      box-shadow: 0 18px 36px rgba(56, 189, 248, 0.6);
-    }
-
-    .btn-ghost {
-      background: rgba(15, 23, 42, 0.4);
-      border-color: rgba(148, 163, 184, 0.5);
-      color: var(--text-main);
-    }
-
-    .btn-ghost:hover {
-      background: rgba(15, 23, 42, 0.9);
-    }
-
-    .btn-icon-circle {
-      width: 20px;
-      height: 20px;
-      border-radius: 999px;
-      border: 1px solid rgba(15, 23, 42, 0.85);
-      background: rgba(15, 23, 42, 0.98);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 11px;
-    }
-
-    /* Footer */
-    footer {
-      padding: 10px 24px 16px;
-      border-top: 1px dashed rgba(148, 163, 184, 0.4);
-      font-size: 11px;
-      display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
       gap: 12px;
-      color: var(--text-muted);
+      font-size: 11px;
+      color: #6b7280;
       flex-wrap: wrap;
     }
 
-    /* Simple JS demo tooltip */
-    .hint {
-      cursor: pointer;
-      text-decoration: underline dotted;
+    .footer-links-small a {
+      margin-left: 10px;
+      color: #9ca3af;
+      text-decoration: none;
+      font-size: 11px;
     }
 
-    /* Mobile adjustments */
+    .footer-links-small a:hover {
+      text-decoration: underline;
+    }
+
+    /* Mobile tweaks */
     @media (max-width: 600px) {
       body {
         padding: 20px 10px 32px;
@@ -685,13 +631,14 @@
         font-size: 13px;
       }
 
-      nav {
-        justify-content: flex-start;
+      .service-image,
+      .project-image {
+        display: none;
       }
 
-      .btn,
-      .status-pill {
-        white-space: normal;
+      .service-card,
+      .project-card {
+        min-height: auto;
       }
     }
   </style>
@@ -700,16 +647,20 @@
   <div class="page" id="top">
     <header>
       <div class="logo">
-        <div class="logo-mark">B</div>
+        <img src="bimfly-logo.svg" alt="BIMfly logo" class="logo-img" />
         <div>
           <div class="logo-text-main">BIMfly</div>
-          <div class="logo-text-sub">
-            <span>Digital Engineering</span>
-          </div>
         </div>
       </div>
 
-      <nav>
+      <button class="nav-toggle" type="button" onclick="toggleNav()" aria-label="Toggle navigation">
+        <div class="nav-toggle-bars">
+          <span></span><span></span><span></span>
+        </div>
+        <span>Menu</span>
+      </button>
+
+      <nav class="nav-links">
         <a href="#top"><span class="dot"></span>Home</a>
 
         <div class="nav-dropdown">
@@ -724,16 +675,18 @@
           </div>
         </div>
 
-        <a href="#projects"><span class="dot"></span>Projects</a>
-        <a href="#contact" class="primary"><span class="dot"></span>Contact us</a>
+        <a href="projects.html"><span class="dot"></span>Projects</a>
+        <a href="contact.html" class="primary"><span class="dot"></span>Contact</a>
       </nav>
     </header>
+
+    <div class="hero-banner" aria-label="Building services visual"></div>
 
     <main>
       <!-- HERO -->
       <section class="hero" id="overview">
         <div class="badge">
-          <span class="badge-pill">MEP-focused BIM &amp; coordination</span>
+          <span class="badge-pill">MEP Digital Engineering</span>
         </div>
 
         <div>
@@ -742,8 +695,12 @@
             for complex building and infrastructure projects.
           </h1>
           <p class="subtitle">
-            BIMfly helps design and construction teams deliver coordinated, data-driven
-            models — aligned with ISO 19650, focused on MEP integration and powered
+            BIMfly helps design and construction teams deliver coordinated, data-driven models —
+            in managing and implementing advanced BIM processes and technologies in construction
+            projects. Proficient in BIM coordination, clash detection, model validation, and
+            data-driven decision-making. Committed to maintaining
+            industry standards to ensure consistency in workflows, data structures, and
+            deliverables. Aligned with ISO 19650, focused on MEP integration and powered
             by smart automation, dashboards and clear communication.
           </p>
         </div>
@@ -758,11 +715,64 @@
             <span>Specialised in MEP, coordination &amp; automation-driven BIM</span>
           </div>
         </div>
+      </section>
 
-        <!-- SERVICES tiles on home -->
+      <!-- PROJECTS (now above Services) -->
+      <section class="projects" id="projects">
+        <div class="section-heading">Projects</div>
+        <div class="projects-grid">
+          <a class="project-card" href="projects.html#aviation">
+            <div class="project-image" style="background-image: url('assets/projects/aviation.jpg');"></div>
+            <div class="project-body">
+              <div class="project-tag">Sector · Aviation</div>
+              <div class="project-title">Aviation</div>
+              <div class="project-meta">
+                Information Management · MEP 3D Modelling for airside and landside assets.
+              </div>
+            </div>
+          </a>
+
+          <a class="project-card" href="projects.html#mixed-use">
+            <div class="project-image" style="background-image: url('assets/projects/Mixed-use-building.jpg');"></div>
+            <div class="project-body">
+              <div class="project-tag">Sector · Mixed-use</div>
+              <div class="project-title">Mixed-use Developments</div>
+              <div class="project-meta">
+                MEP 3D Modelling · BIM Content Library for complex, multi-tenant buildings.
+              </div>
+            </div>
+          </a>
+
+          <a class="project-card" href="projects.html#residential-villas">
+            <div class="project-image" style="background-image: url('assets/projects/high-rise-building.jpg');"></div>
+            <div class="project-body">
+              <div class="project-tag">Sector · Residential</div>
+              <div class="project-title">High-rised Buildings &amp; Villas</div>
+              <div class="project-meta">
+                Detailed MEP 3D Modelling for premium villas and high-end interiors.
+              </div>
+            </div>
+          </a>
+		  
+		  <a class="project-card" href="projects.html#Stadiums">
+            <div class="project-image" style="background-image: url('assets/projects/stadiums.jpg');"></div>
+            <div class="project-body">
+              <div class="project-tag">Sector · Stadiums</div>
+              <div class="project-title">Stadiums</div>
+              <div class="project-meta">
+                Detailed MEP 3D Modelling for premium villas and high-end interiors.
+              </div>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <!-- SERVICES (now below Projects) -->
+      <section class="services-section">
+        <h2 class="services-heading">Services</h2>
         <div class="services" id="services">
           <a class="service-card" href="information-management.html">
-            <div class="service-image" style="background-image: url('https://images.pexels.com/photos/6476584/pexels-photo-6476584.jpeg?auto=compress&cs=tinysrgb&w=800');"></div>
+            <div class="service-image" style="background-image: url('assets/services/info-management.jpeg');"></div>
             <div class="service-body">
               <div class="service-label">Service Stream 01</div>
               <div class="service-title">Information Management</div>
@@ -773,7 +783,7 @@
           </a>
 
           <a class="service-card" href="mep-3d-modelling.html">
-            <div class="service-image" style="background-image: url('https://images.pexels.com/photos/8472420/pexels-photo-8472420.jpeg?auto=compress&cs=tinysrgb&w=800');"></div>
+            <div class="service-image" style="background-image: url('assets/services/mep-3d-modelling.jpeg');"></div>
             <div class="service-body">
               <div class="service-label">Service Stream 02</div>
               <div class="service-title">MEP 3D Modelling</div>
@@ -784,7 +794,7 @@
           </a>
 
           <a class="service-card" href="bim-content-library.html">
-            <div class="service-image" style="background-image: url('https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg?auto=compress&cs=tinysrgb&w=800');"></div>
+            <div class="service-image" style="background-image: url('assets/services/bim-content-library.jpeg');"></div>
             <div class="service-body">
               <div class="service-label">Service Stream 03</div>
               <div class="service-title">BIM Content Library</div>
@@ -795,7 +805,7 @@
           </a>
 
           <a class="service-card" href="research-and-development.html">
-            <div class="service-image" style="background-image: url('https://images.pexels.com/photos/3861964/pexels-photo-3861964.jpeg?auto=compress&cs=tinysrgb&w=800');"></div>
+            <div class="service-image" style="background-image: url('assets/services/research-and-development.jpeg');"></div>
             <div class="service-body">
               <div class="service-label">Service Stream 04</div>
               <div class="service-title">Research &amp; Development</div>
@@ -806,137 +816,69 @@
           </a>
         </div>
       </section>
-
-      <!-- PROJECTS -->
-      <section class="projects" id="projects">
-        <div class="section-heading">Projects</div>
-        <div class="projects-grid">
-          <div class="project-card">
-            <div class="project-title">Aviation</div>
-            <div>Information Management / MEP 3D Modelling</div>
-          </div>
-          <div class="project-card">
-            <div class="project-title">Mixed-use</div>
-            <div>MEP 3D Modelling / BIM Content Library</div>
-          </div>
-          <div class="project-card">
-            <div class="project-title">High-end Residential &amp; Villas</div>
-            <div>MEP 3D Modelling</div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ENGAGEMENT SNAPSHOT (kept) -->
-      <section class="side-panel" aria-label="BIMfly engagement snapshot" id="engagement-snapshot">
-        <div class="side-header">
-          <div class="side-title">Engagement Snapshot</div>
-          <div class="status-pill">
-            <span class="status-dot"></span>
-            <span id="status-text">Now accepting new projects</span>
-          </div>
-        </div>
-
-        <div class="status-main">
-          <strong>Typical collaboration starts with a 30–45 minute discovery call.</strong>
-          <br />
-          We review your current BIM setup, project constraints and delivery milestones,
-          then propose a focused package covering standards, modelling, coordination and automation.
-        </div>
-
-        <div class="mini-grid">
-          <div class="mini-card">
-            <div class="mini-label">Focus</div>
-            <div class="mini-value">MEP &amp; BIM</div>
-            <div class="mini-sub">Coordination-driven delivery</div>
-          </div>
-
-          <div class="mini-card">
-            <div class="mini-label">Projects</div>
-            <div class="mini-value">Design &amp; Build</div>
-            <div class="mini-sub">Buildings &amp; Infrastructure</div>
-          </div>
-
-          <div class="mini-card">
-            <div class="mini-label">Value</div>
-            <div class="mini-value">+20–30%</div>
-            <div class="mini-sub">Efficiency via automation*</div>
-          </div>
-        </div>
-
-        <div class="event-list">
-          <div class="event-item">
-            <span class="event-meta">
-              Step 1 — <span class="hint" onclick="highlightCSS()">Discovery &amp; Scope</span>:
-              clarify BIM uses, deliverables, roles and risk points.
-            </span>
-            <span class="pill-soft">Week 0–1</span>
-          </div>
-
-          <div class="event-item">
-            <span class="event-meta">
-              Step 2 — Standards &amp; Setup: BEP, model structure, naming rules and QA checkpoints.
-            </span>
-            <span class="pill-soft">Week 1–2</span>
-          </div>
-
-          <div class="event-item">
-            <span class="event-meta">
-              Step 3 — Coordination &amp; Automations: regular clash reviews, health reports and scripts.
-            </span>
-            <span class="pill-soft">Ongoing</span>
-          </div>
-        </div>
-      </section>
-
-      <!-- CONTACT US (end of page, with CTAs) -->
-      <section class="contact-section" id="contact">
-        <div class="contact-title">Contact us</div>
-        <p class="contact-text">
-          Ready to reduce clashes, rework and last-minute drawing panic?  
-          Share a short description of your project and we’ll suggest how BIMfly can help with
-          information management, MEP 3D modelling, BIM content or automation.
-        </p>
-
-        <div class="contact-row">
-          <span>Email:</span>
-          <a href="mailto:hello@bimfly.studio">hello@bimfly.studio</a>
-        </div>
-
-        <div class="cta-row-bottom">
-          <button class="btn btn-primary" onclick="showAlert()">
-            <span class="btn-icon-circle">📅</span>
-            Book a discovery call
-          </button>
-          <button class="btn btn-ghost">
-            <span class="btn-icon-circle">⬇</span>
-            Download service brochure (PDF)
-          </button>
-        </div>
-      </section>
     </main>
 
     <footer>
-      <span>© BIMfly · BIM &amp; Digital Engineering Studio</span>
-      <span>Built with Quicksand · Mobile-first layout</span>
+      <div class="footer-inner">
+        <div class="footer-logo-block">
+          <img src="bimfly-logo.svg" alt="BIMfly logo" class="footer-logo-small" />
+          <p>
+            BIMfly is a BIM &amp; digital engineering focused on MEP-led coordination,
+            robust information management and automation-driven delivery for buildings and infrastructure.
+          </p>
+        </div>
+
+        <div>
+          <div class="footer-heading">Quick Links</div>
+          <ul class="footer-list">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="information-management.html">Information Management</a></li>
+            <li><a href="mep-3d-modelling.html">MEP 3D Modelling</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="footer-heading">Location</div>
+          <ul class="footer-list">
+            <li>
+              <span class="footer-location-icon">📍</span>
+              20 new mossford way, Ilford, London, United Kingdom<br />
+              (Remote support worldwide)
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="footer-heading">Contact</div>
+          <ul class="footer-list">
+            <li>
+              <span class="footer-contact-icon">📞</span>
+              UK: +44 07417 587052
+            </li>
+            <li>
+              <span class="footer-contact-icon">✉️</span>
+              Email: <a href="mailto:bimflyservices@gmail.com">bimflyservices@gmail.com</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2025 BIMfly — BIM &amp; Digital Engineering. All rights reserved.</span>
+        <span class="footer-links-small">
+          <a href="#">GitHub</a>
+          <a href="#">LinkedIn</a>
+          <a href="#">YouTube</a>
+        </span>
+      </div>
     </footer>
   </div>
 
   <script>
-    function showAlert() {
-      const statusText = document.getElementById("status-text");
-      statusText.textContent = "Discovery call requested · We’ll get back shortly.";
-      alert(
-        "BIMfly demo:\n\nIn the real site this button would open your booking link or contact form.\nReplace this alert with Calendly, MS Bookings or an embedded form."
-      );
-      setTimeout(() => {
-        statusText.textContent = "Now accepting new projects";
-      }, 2200);
-    }
-
-    function highlightCSS() {
-      alert(
-        "Design tip:\n\nEdit the colour variables inside the :root block in the <style> section.\nYou can re-theme BIMfly to your brand colours without touching every rule."
-      );
+    function toggleNav() {
+      document.body.classList.toggle('nav-open');
     }
   </script>
 </body>

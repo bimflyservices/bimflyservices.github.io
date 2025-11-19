@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BIMfly · Contact</title>
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #0f172a;
+      --bg-soft: #111827;
+      --accent: #38bdf8;
+      --text-main: #e5e7eb;
+      --text-muted: #9ca3af;
+      --border-subtle: rgba(148, 163, 184, 0.3);
+      --max-width: 1080px;
+      --green: #22c55e;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Quicksand", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #1f2937 0, #020617 52%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 32px 16px 48px;
+    }
+
+    .page {
+      width: 100%;
+      max-width: var(--max-width);
+      border-radius: 28px;
+      background: linear-gradient(145deg, rgba(15, 23, 42, 0.92), rgba(15, 23, 42, 0.98));
+      border: 1px solid rgba(148, 163, 184, 0.22);
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.65);
+      overflow: hidden;
+    }
+
+    /* Header – same as index */
+    header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      background: linear-gradient(120deg, rgba(15, 23, 42, 0.97), rgba(30, 64, 175, 0.45));
+      flex-wrap: wrap;
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(10px);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .logo-img {
+      height: 32px;
+      width: auto;
+      display: block;
+    }
+
+    @media (min-width: 800px) {
+      .logo-img { height: 36px; }
+    }
+
+    .logo-text-main {
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      font-size: 20px;
+    }
+
+    nav {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
+    nav a,
+    nav button.nav-trigger {
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      text-decoration: none;
+      color: var(--text-muted);
+      border: 1px solid transparent;
+      background: transparent;
+      transition: all 0.18s ease-out;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    nav a span.dot,
+    nav button.nav-trigger span.dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--text-muted);
+      opacity: 0.6;
+    }
+
+    nav a:hover,
+    nav button.nav-trigger:hover {
+      color: var(--text-main);
+      border-color: rgba(148, 163, 184, 0.4);
+      background: rgba(15, 23, 42, 0.7);
+    }
+
+    nav a.primary {
+      color: #0b1120;
+      background: var(--accent);
+      border-color: rgba(56, 189, 248, 0.8);
+      box-shadow: 0 9px 18px rgba(56, 189, 248, 0.35);
+      font-weight: 600;
+    }
+
+    nav a.primary span.dot {
+      background: #0b1120;
+      opacity: 0.9;
+    }
+
+    /* Dropdown – same behaviour as index */
+    .nav-dropdown {
+      position: relative;
+    }
+
+    .nav-dropdown-menu {
+      position: absolute;
+      top: 120%;
+      left: 0;
+      min-width: 210px;
+      background: #0284c7;
+      border-radius: 0 0 10px 10px;
+      box-shadow: 0 10px 20px rgba(15, 23, 42, 0.6);
+      display: none;
+      flex-direction: column;
+      padding: 10px 0;
+      z-index: 50;
+    }
+
+    .nav-dropdown-menu a {
+      padding: 9px 18px;
+      border-radius: 0;
+      font-size: 12px;
+      color: #f9fafb;
+      border: none;
+      background: transparent;
+      gap: 0;
+    }
+
+    .nav-dropdown-menu a:hover {
+      background: rgba(15, 23, 42, 0.2);
+      border: none;
+    }
+
+    .nav-dropdown:hover .nav-dropdown-menu {
+      display: flex;
+    }
+
+    /* Mobile menu */
+    .nav-toggle {
+      display: none;
+      background: transparent;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      border-radius: 999px;
+      padding: 6px 9px;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      color: var(--text-main);
+      font-size: 11px;
+    }
+
+    .nav-toggle-bars {
+      display: inline-flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .nav-toggle-bars span {
+      width: 14px;
+      height: 2px;
+      border-radius: 999px;
+      background: var(--text-main);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
+    @media (max-width: 720px) {
+      header { align-items: flex-start; }
+
+      .nav-toggle {
+        display: inline-flex;
+        margin-left: auto;
+      }
+
+      .nav-links {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-top: 10px;
+      }
+
+      body.nav-open .nav-links { display: flex; }
+    }
+
+    main {
+      padding: 24px 20px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .contact-hero-title {
+      font-size: 26px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .contact-hero-sub {
+      font-size: 14px;
+      color: var(--text-muted);
+      max-width: 520px;
+      line-height: 1.6;
+      margin-bottom: 18px;
+    }
+
+    .contact-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 24px;
+    }
+
+    @media (max-width: 840px) {
+      .contact-layout { grid-template-columns: minmax(0, 1fr); }
+    }
+
+    .contact-form-card,
+    .contact-info-card {
+      border-radius: 20px;
+      border: 1px solid rgba(55, 65, 81, 0.8);
+      background: rgba(15, 23, 42, 0.96);
+      padding: 16px 16px 18px;
+    }
+
+    .contact-card-heading {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .contact-card-text {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .field { display: flex; flex-direction: column; gap: 4px; margin-bottom: 12px; }
+
+    .field label {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .field input,
+    .field textarea {
+      border-radius: 12px;
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      background: rgba(15, 23, 42, 0.95);
+      padding: 9px 11px;
+      font-family: inherit;
+      font-size: 13px;
+      color: var(--text-main);
+      outline: none;
+      resize: vertical;
+    }
+
+    .field input::placeholder,
+    .field textarea::placeholder { color: #6b7280; }
+
+    .field input:focus,
+    .field textarea:focus {
+      border-color: var(--green);
+      box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.6);
+    }
+
+    .btn {
+      border-radius: 999px;
+      padding: 9px 16px;
+      font-size: 13px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      font-family: inherit;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      max-width: 360px;
+      color: #020617;
+      font-weight: 600;
+      background: linear-gradient(140deg, #38bdf8, #a5b4fc);
+      box-shadow: 0 14px 28px rgba(56, 189, 248, 0.4);
+    }
+
+    .btn:hover {
+      filter: brightness(1.03);
+      transform: translateY(-1px);
+      box-shadow: 0 18px 36px rgba(56, 189, 248, 0.6);
+    }
+
+    .contact-info-list {
+      list-style: none;
+      font-size: 13px;
+      color: #d1d5db;
+    }
+
+    .contact-info-list li + li { margin-top: 8px; }
+
+    .contact-info-list a {
+      color: #7dd3fc;
+      text-decoration: none;
+    }
+
+    .contact-info-list a:hover { text-decoration: underline; }
+
+    .map-wrap {
+      margin-top: 14px;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid rgba(31, 41, 55, 0.9);
+    }
+
+    .map-wrap iframe {
+      width: 100%;
+      height: 220px;
+      border: 0;
+    }
+
+    .contact-footnote {
+      margin-top: 10px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .contact-footnote a {
+      color: #f9fafb;
+      text-decoration: none;
+      border-bottom: 1px dotted rgba(167, 243, 208, 0.7);
+    }
+
+    .contact-footnote a:hover { border-bottom-style: solid; }
+
+    /* Footer – same structure + data as index */
+    footer {
+      background: #020617;
+      border-top: 1px solid rgba(15, 23, 42, 0.9);
+      padding: 24px 24px 16px;
+      color: #e5e7eb;
+      margin-top: 24px;
+    }
+
+    .footer-inner {
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) repeat(3, minmax(0, 1.4fr));
+      gap: 32px;
+      border-bottom: 1px solid rgba(31, 41, 55, 0.9);
+      padding-bottom: 18px;
+      margin-bottom: 10px;
+    }
+
+    @media (max-width: 880px) {
+      .footer-inner { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+    }
+
+    @media (max-width: 640px) {
+      .footer-inner { grid-template-columns: minmax(0, 1fr); }
+    }
+
+    .footer-logo-block p {
+      font-size: 13px;
+      color: #9ca3af;
+      line-height: 1.7;
+      margin-top: 10px;
+      max-width: 260px;
+    }
+
+    .footer-logo-small {
+      height: 40px;
+      width: auto;
+      margin-bottom: 4px;
+    }
+
+    .footer-heading {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .footer-list {
+      list-style: none;
+      font-size: 13px;
+      color: #d1d5db;
+    }
+
+    .footer-list li + li { margin-top: 6px; }
+
+    .footer-list a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .footer-list a:hover { text-decoration: underline; }
+
+    .footer-location-icon,
+    .footer-contact-icon { margin-right: 6px; }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      font-size: 11px;
+      color: #6b7280;
+      flex-wrap: wrap;
+    }
+
+    .footer-links-small a {
+      margin-left: 10px;
+      color: #9ca3af;
+      text-decoration: none;
+      font-size: 11px;
+    }
+
+    .footer-links-small a:hover { text-decoration: underline; }
+
+    @media (max-width: 600px) {
+      body { padding: 20px 10px 32px; }
+      main { padding: 20px 16px 20px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="logo">
+        <img src="bimfly-logo.svg" alt="BIMfly logo" class="logo-img" />
+        <div><div class="logo-text-main"><a href="index.html"> BIMfly</div></div>
+      </div>
+
+      <button class="nav-toggle" type="button" onclick="toggleNav()" aria-label="Toggle navigation">
+        <div class="nav-toggle-bars">
+          <span></span><span></span><span></span>
+        </div>
+        <span>Menu</span>
+      </button>
+
+      <nav class="nav-links">
+        <a href="index.html"><span class="dot"></span>Home</a>
+
+        <div class="nav-dropdown">
+          <button class="nav-trigger" onclick="location.href='index.html#services'">
+            <span class="dot"></span>Services
+          </button>
+          <div class="nav-dropdown-menu">
+            <a href="information-management.html">Information Management</a>
+            <a href="mep-3d-modelling.html">MEP 3D Modelling</a>
+            <a href="bim-content-library.html">BIM Content Library</a>
+            <a href="research-and-development.html">Research &amp; Development</a>
+          </div>
+        </div>
+
+        <a href="projects.html"><span class="dot"></span>Projects</a>
+        <a href="contact.html" class="primary"><span class="dot"></span>Contact</a>
+      </nav>
+    </header>
+
+    <main>
+      <section>
+        <h1 class="contact-hero-title">Let’s talk about your project</h1>
+        <p class="contact-hero-sub">
+          Share a few details about your project, framework or role and you’ll get a reply as soon as possible.
+          Whether it’s a single asset or a full programme, BIMfly can help shape the right BIM approach and tools for your team.
+        </p>
+
+        <div class="contact-layout">
+          <!-- Form -->
+          <div class="contact-form-card">
+            <div class="contact-card-heading">Send a message</div>
+            <p class="contact-card-text">
+              Use the form below to outline your project scope, milestones and any specific BIM frameworks or deliverables.
+            </p>
+
+            <form onsubmit="handleContactSubmit(event)">
+              <div class="field">
+                <label for="name">Your name</label>
+                <input id="name" name="name" type="text" placeholder="Your name" required>
+              </div>
+              <div class="field">
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" placeholder="you@company.com" required>
+              </div>
+              <div class="field">
+                <label for="project">Project / opportunity (optional)</label>
+                <input id="project" name="project" type="text" placeholder="Project / opportunity">
+              </div>
+              <div class="field">
+                <label for="message">Tell me a little about your project or role...</label>
+                <textarea id="message" name="message" rows="4" placeholder="Scope, programme, frameworks, challenges…"></textarea>
+              </div>
+
+              <button class="btn" type="submit">Send message</button>
+            </form>
+
+            <p class="contact-footnote">
+              Prefer email? <a href="mailto:bimflyservices@gmail.com">bimflyservices@gmail.com</a>
+            </p>
+          </div>
+
+          <!-- Info + map -->
+          <div class="contact-info-card">
+            <div class="contact-card-heading">Address &amp; phone</div>
+            <p class="contact-card-text">
+              Based in Ilford, London – providing BIM &amp; digital engineering support to teams in the UK and internationally.
+            </p>
+            <ul class="contact-info-list">
+              <li>📍 20 New Mossford Way, Ilford, London, United Kingdom</li>
+              <li>📞 UK: +44 07417 587052</li>
+              <li>✉️ Email: <a href="mailto:bimflyservices@gmail.com">bimflyservices@gmail.com</a></li>
+            </ul>
+
+            <div class="map-wrap">
+              <!-- Replace src with your real Google Maps embed when ready -->
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d260.58032304542985!2d0.0836570675321194!3d51.58524756929298!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47d8a6a4dd46136f%3A0x789ba8ab5d4ab7d5!2s20%20New%20Mossford%20Wy.%2C%20Ilford%20IG6%201FB!5e0!3m2!1sen!2suk!4v1763576296571!5m2!1sen!2suk"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade">
+              </iframe>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-inner">
+        <div class="footer-logo-block">
+          <img src="bimfly-logo.svg" alt="BIMfly logo" class="footer-logo-small" />
+          <p>
+            BIMfly is a BIM &amp; digital engineering focused on MEP-led coordination,
+            robust information management and automation-driven delivery for buildings and infrastructure.
+          </p>
+        </div>
+
+        <div>
+          <div class="footer-heading">Quick Links</div>
+          <ul class="footer-list">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="information-management.html">Information Management</a></li>
+            <li><a href="mep-3d-modelling.html">MEP 3D Modelling</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="footer-heading">Location</div>
+          <ul class="footer-list">
+            <li>
+              <span class="footer-location-icon">📍</span>
+              20 New Mossford Way, Ilford, London, United Kingdom<br />
+              (Remote support worldwide)
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="footer-heading">Contact</div>
+          <ul class="footer-list">
+            <li>
+              <span class="footer-contact-icon">📞</span>
+              UK: +44 07417 587052
+            </li>
+            <li>
+              <span class="footer-contact-icon">✉️</span>
+              Email: <a href="mailto:bimflyservices@gmail.com">bimflyservices@gmail.com</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2025 BIMfly — BIM &amp; Digital Engineering. All rights reserved.</span>
+        <span class="footer-links-small">
+          <a href="#">GitHub</a>
+          <a href="#">LinkedIn</a>
+          <a href="#">YouTube</a>
+        </span>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    function toggleNav() {
+      document.body.classList.toggle('nav-open');
+    }
+
+    function handleContactSubmit(e) {
+      e.preventDefault();
+      alert("Demo only: wire this form to Formspree / Netlify / your own API.");
+      e.target.reset();
+    }
+  </script>
+</body>
+</html>
